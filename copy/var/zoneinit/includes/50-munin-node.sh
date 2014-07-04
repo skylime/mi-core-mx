@@ -1,3 +1,6 @@
+MUNIN_PLUGIN_SRC='/opt/local/lib/munin/plugins'
+MUNIN_PLUGIN_DST='/opt/local/etc/munin/plugins'
+
 # Enable plugins as destination name (for example if_net0)
 MUNIN_PLUGINS=(
 	'cpu'
