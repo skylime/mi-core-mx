@@ -45,7 +45,10 @@ rm /tmp/exim.xml
 # Update spamd and clamd
 echo "* Update spamd and clamd database"
 /opt/local/bin/freshclam
-#sudo -u spamd /opt/local/bin/sa-update
+
+#·munin
+echo "* Create munin template file that will be used during mdata setup"
+cp /opt/local/etc/munin/munin-node.conf /opt/local/etc/munin/munin-node.conf.tpl
 
 # Configuring image specific packages
 echo "* Configuring image specific packages.";

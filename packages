@@ -5,3 +5,5 @@ pyzor
 p5-DB_File
 redis
 nano
+munin-node
+p5-Net-CIDR
