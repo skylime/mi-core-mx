@@ -28,14 +28,15 @@ MUNIN_PLUGINS=(
 for plugin in "${MUNIN_PLUGINS[@]}"; do
 	if [ ! -x ${MUNIN_PLUGIN_SRC}/${plugin} ]; then
 		plugin_src=${plugin%_*}_
+		[ ! -x ${MUNIN_PLUGIN_SRC}/${plugin_src} ] && \
+			plugin_src=${plugin_src%%_*}_
 	else
 		plugin_src=${plugin}
 	fi
-	if [ -x ${MUNIN_PLUGIN_SRC}/${src_plugin} ]; then
-		ln -s ${MUNIN_PLUGIN_SRC}/${plugin_src} ${MUNIN_PLUGIN_DST}/${plugin}
+	if [[ -x ${MUNIN_PLUGIN_SRC}/${plugin_src} ]]; then
+		ln -sf ${MUNIN_PLUGIN_SRC}/${plugin_src} ${MUNIN_PLUGIN_DST}/${plugin}
 	fi
 done
-
 
 # Enable munin service
 /usr/sbin/svcadm enable svc:/pkgsrc/munin-node:default
