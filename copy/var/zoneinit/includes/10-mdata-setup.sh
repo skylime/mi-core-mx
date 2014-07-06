@@ -1,1 +1,1 @@
-/usr/sbin/svcadm enable svc:/coreio/mdata-setup:default
+/usr/sbin/svcadm enable -s svc:/coreio/mdata-setup:default
