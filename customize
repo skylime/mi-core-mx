@@ -2,6 +2,8 @@
 #
 # Put customizations to your image in this file.
 
+MUNIN_PLUGIN_VERSION='0.2'
+
 PATH=/opt/local/gnu/bin:/opt/local/bin:/opt/local/sbin:/usr/bin:/usr/sbin
 
 # Exit if any commands fail
@@ -46,9 +48,13 @@ rm /tmp/exim.xml
 echo "* Update spamd and clamd database"
 /opt/local/bin/freshclam
 
-#·munin
+# Create munin template file that will be used during mdata setup
 echo "* Create munin template file that will be used during mdata setup"
 cp /opt/local/etc/munin/munin-node.conf /opt/local/etc/munin/munin-node.conf.tpl
+
+# Download and install community munin plugins
+echo "* Download and install community munin plugins (overwrite all other plugins)"
+curl -L https://github.com/drscream/smartos-munin-plugins/archive/${MUNIN_PLUGIN_VERSION}.tar.gz | tar xz -C /opt/local/lib/munin/plugins
 
 # Configuring image specific packages
 echo "* Configuring image specific packages.";
