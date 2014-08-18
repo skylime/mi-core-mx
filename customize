@@ -9,13 +9,6 @@ PATH=/opt/local/gnu/bin:/opt/local/bin:/opt/local/sbin:/usr/bin:/usr/sbin
 # Exit if any commands fail
 set -o errexit
 
-echo "* Install spiped"
-pkg_add http://pkgsrc.smartos.skylime.net/skylime-extra/2014Q1/x86_64/spiped-1.3.1nb3.tgz
-
-echo "* Enable mdata-setup script"
-svccfg import /tmp/mdata-setup.xml
-rm /tmp/mdata-setup.xml
-
 echo "* Create clamav logging directory"
 mkdir -p /var/log/clamav
 chown clamav:clamav /var/log/clamav
@@ -47,22 +40,13 @@ rm /tmp/exim.xml
 # Update spamd and clamd
 echo "* Update spamd and clamd database"
 /opt/local/bin/freshclam
-
-# Create munin template file that will be used during mdata setup
-echo "* Create munin template file that will be used during mdata setup"
-cp /opt/local/etc/munin/munin-node.conf /opt/local/etc/munin/munin-node.conf.tpl
-
-# Download and install community munin plugins
-echo "* Download and install community munin plugins (overwrite all other plugins)"
-curl -L https://github.com/drscream/smartos-munin-plugins/archive/v${MUNIN_PLUGIN_VERSION}.tar.gz | tar xz -C /opt/local/lib/munin/plugins
-
 pyzor --homedir /opt/local/etc/spamassassin discover
 
 # Configuring image specific packages
 echo "* Configuring image specific packages.";
 # Exim
-pkg_add http://pkgsrc.smartos.skylime.net/skylime-extra/2014Q1/x86_64/hiredis-0.11.0.tgz
-pkg_add http://pkgsrc.smartos.skylime.net/skylime-extra/2014Q1/x86_64/exim-4.82nb1.tgz
+pkg_add http://pkgsrc.smartos.skylime.net/skylime-extra/2014Q2/x86_64/hiredis-0.11.0.tgz
+pkg_add http://pkgsrc.smartos.skylime.net/skylime-extra/2014Q2/x86_64/exim-4.82nb1.tgz
 
 # Clean up
 echo "* Cleaning up."
