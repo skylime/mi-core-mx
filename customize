@@ -39,7 +39,7 @@ rm /tmp/exim.xml
 
 # Update spamd and clamd
 echo "* Update spamd and clamd database"
-/opt/local/bin/freshclam
+#/opt/local/bin/freshclam
 pyzor --homedir /opt/local/etc/spamassassin discover
 
 # Configuring image specific packages
