@@ -15,9 +15,6 @@ Please refer to https://github.com/joyent/mibe for use of this repo.
 - <code>srs_secret</code>: secret for generating SRS strings
 - <code>srs_secret_old</code>: old/outdated secret for transition
 
-- `munin_allow`: hosts that are allowed to connect to munin, separated by space
-- `munin_deny`: hosts that are explicit not allowed, separated by space
-
 ## services
 
 - <code>25/tcp</code>: smtp
