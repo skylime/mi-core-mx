@@ -4,6 +4,7 @@
 # for SSL
 mdata-get mx_ssl > /opt/local/etc/exim/ssl/exim.pem
 chmod 400 /opt/local/etc/exim/ssl/exim.pem
+chown exim /opt/local/etc/exim/ssl/exim.pem
 
 ## Exim special configuration
 EXIMLOCAL=/opt/local/etc/exim/configure.local
