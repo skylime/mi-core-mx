@@ -4,3 +4,4 @@ spamassassin
 pyzor
 p5-DB_File
 redis
+hiredis
