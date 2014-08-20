@@ -220,8 +220,10 @@ begin routers
 	#>> futher internal mailserver
 	intmailserver:
 		driver = manualroute
-		route_data = ${lookup redis{EXISTS ACCOUNTPREFIX${lc:local_part}@${domain}}{MAILBOX_SERVER}}
-		transport = remote_smtp
+                condition = ${lookup redis{EXISTS ACCOUNTPREFIX${lc:$local_part}@${domain}}}
+                route_data = MAILBOX_SERVER
+                self = send
+		transport = int_smtp
 
 	#>> dnslookup - for all mails to external recipients - if it's not in thedatabase
 	lookuphost:
@@ -238,10 +240,10 @@ begin routers
 		address_data = ${eval:($tod_epoch/86400)-13370}+\
 			${sender_address_domain}+$sender_address_local_part
 		errors_to = ${quote_local_part:SRS0+${length_SRS_HASH_LENGTH:${hmac{sha1}{SRS_SECRET}{${lc:$address_data}}}}+\
-			${$address_data}@\
+			${lc:$address_data}}@\
 			${domain}
 		driver = redirect
-		data = ${lookup redis{HGET ALIASPREFIX${quote_local_part:local_part}@${domain} to}{$value}{${lookup redis{HGET ALIASPREFIX*@${domain} to}{$value}fail}}}
+		data = ${lookup redis{HGET ALIASPREFIX${quote_local_part:$local_part}@${domain} to}{$value}{${lookup redis{HGET ALIASPREFIX*@${domain} to}{$value}fail}}}
 		# Straight to output; don't start routing again from the beginning.
 		redirect_router = lookuphost
 		no_verify
@@ -253,11 +255,15 @@ begin transports
 	#>> smtp
 	remote_smtp:
 		driver = smtp
-		interface = SMTPINTERFACE
 		dkim_domain = ${sender_address_domain}
 		dkim_selector = dkim
 		dkim_private_key = DEFAULT_DOMAINKEY
 		dkim_canon = relaxed
+	#>> via lmtp to our own Infrstructure
+        int_lmtp:
+                driver = smtp
+                protocol = lmtp
+                port = MAILBOX_SRV_PORT
 	#>> Maildir at this host
 	localdir:
 		driver = appendfile
@@ -273,8 +279,8 @@ begin transports
 #>> retry
 #>>
 begin retry
-#	*                      *           F,2h,15m; G,16h,1h,1.5; F,24d,6h
-	*                      *           F,2h,15m; G,16h,1h,1.5; F,4d,6h
+127.0.0.1       *       H,60d,1m,10
+*		*	F,2h,15m; G,16h,1h,1.5; F,4d,6h
 
 
 #>>
