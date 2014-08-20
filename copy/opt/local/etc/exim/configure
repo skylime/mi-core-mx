@@ -187,35 +187,50 @@ begin routers
 		  }
 		headers_add = X-SRS-Return: DSN routed via $primary_hostname. See SRS_URL
 
-	rpr_outgoing_goto:
-		caseful_local_part
-		driver = redirect
-		# Don't rewrite if it's a bounce, or from one of our own addresses.
-		senders = ! : ! ${lookup redis{EXISTS ACCOUNTPREFIX${local_part}@${domain}}}
-		# Rewrite only if Entry in Alias-DB
-                condition = ${lookup redis{EXISTS ALIASPREFIX${local_part}@${domain}}}
-
-		# We want to rewrite. We just jump to the rpr_rewrite router which is itself unconditional.
-		data = ${quote_local_part:$local_part}@$domain
-		redirect_router = rpr_rewrite
-
 	tag_rewrite:
 		caseful_local_part
 		driver = redirect
 		data = ${if match{$local_part}{\N^([^+]+)\+([^+]+)\N} \
 		  {${quote_local_part:$1}@$domain}\
-		  }
-		headers_add = X-Tag: {$2}
+		}
 
-	#>> look up adress and get some more adresses
-	alias:
-		driver = redirect
-		data = ${lookup redis{HGET ALIASPREFIX${local_part}@${domain} to}}
+        #>> look up adress and get some more adresses
+        alias:
+                caseful_local_part
+                driver = redirect
+                # Don't rewrite if it's a bounce, or from one of our own addresses.
+                senders = ! : ! ${lookup redis{EXISTS ACCOUNTPREFIX${local_part}@${domain}}}
+                # Rewrite only if Entry in Alias-DB
+                headers_add = "X-SRS-Rewrite: SMTP reverse-path rewritten from <$sender_address> by $primary_hostname\n\tSee SRS_URL"
 
-	#>> look up adress and get some more adresses, catch all
-	aliascatchall:
-		driver = redirect
-		data = ${lookup redis{HGET ALIASPREFIX*@${domain} to}}
+                # Encode sender address, hash and timestamp according to http://www.anarres.org/projects/srs/
+                # We try to keep the generated localpart small. We add our own tracking info to the domain part.
+                address_data = ${eval:($tod_epoch/86400)-13370}+\
+                        ${sender_address_domain}+$sender_address_local_part
+                errors_to = ${quote_local_part:SRS0+${length_SRS_HASH_LENGTH:${hmac{sha1}{SRS_SECRET}{${lc:$address_data}}}}+\
+                        ${lc:$address_data}}@\
+                        ${domain}
+                data = ${lookup redis{HGET ALIASPREFIX${quote_local_part:$local_part}@${domain} to}{$value}fail}
+                redirect_router = lookuphost
+
+        #>> look up adress and get some more adresses, catch all
+        aliascatchall:
+                caseful_local_part
+                driver = redirect
+                # Don't rewrite if it's a bounce, or from one of our own addresses.
+                senders = ! : ! ${lookup redis{EXISTS ACCOUNTPREFIX${local_part}@${domain}}}
+                # Rewrite only if Entry in Alias-DB
+                headers_add = "X-SRS-Rewrite: SMTP reverse-path rewritten from <$sender_address> by $primary_hostname\n\tSee SRS_URL"
+
+                # Encode sender address, hash and timestamp according to http://www.anarres.org/projects/srs/
+                # We try to keep the generated localpart small. We add our own tracking info to the domain part.
+                address_data = ${eval:($tod_epoch/86400)-13370}+\
+                        ${sender_address_domain}+$sender_address_local_part
+                errors_to = ${quote_local_part:SRS0+${length_SRS_HASH_LENGTH:${hmac{sha1}{SRS_SECRET}{${lc:$address_data}}}}+\
+                        ${lc:$address_data}}@\
+                        ${domain}
+                data = ${lookup redis{HGET ALIASPREFIX*@${domain} to}{$value}fail}
+                redirect_router = lookuphost
 
 	#>> futher internal mailserver
 	intmailserver:
@@ -231,22 +246,6 @@ begin routers
 		transport = remote_smtp
 		ignore_target_hosts = 0.0.0.0 : 127.0.0.0/8
 		no_more
-
-	rpr_rewrite:
-		caseful_local_part
-		headers_add = "X-SRS-Rewrite: SMTP reverse-path rewritten from <$sender_address> by $primary_hostname\n\tSee SRS_URL"
-		# Encode sender address, hash and timestamp according to http://www.anarres.org/projects/srs/
-		# We try to keep the generated localpart small. We add our own tracking info to the domain part.
-		address_data = ${eval:($tod_epoch/86400)-13370}+\
-			${sender_address_domain}+$sender_address_local_part
-		errors_to = ${quote_local_part:SRS0+${length_SRS_HASH_LENGTH:${hmac{sha1}{SRS_SECRET}{${lc:$address_data}}}}+\
-			${lc:$address_data}}@\
-			${domain}
-		driver = redirect
-		data = ${lookup redis{HGET ALIASPREFIX${quote_local_part:$local_part}@${domain} to}{$value}{${lookup redis{HGET ALIASPREFIX*@${domain} to}{$value}fail}}}
-		# Straight to output; don't start routing again from the beginning.
-		redirect_router = lookuphost
-		no_verify
 
 #>>
 #>> transport
