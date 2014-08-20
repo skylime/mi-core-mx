@@ -13,9 +13,6 @@ SRS_HASH_LENGTH=20
 SRS_DSN_TIMEOUT=10
 SRS_URL=http://www.infradead.org/rpr.html
 
-# Leave primary hostname unset to use uname
-primary_hostname =
-
 # Default Mailbox Server
 MAILBOX_SERVER = 127.0.0.1
 
