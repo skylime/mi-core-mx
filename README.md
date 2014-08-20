@@ -11,7 +11,7 @@ Please refer to https://github.com/joyent/mibe for use of this repo.
 - <code>mbox_lmtp_key</code>: base64 encoded spipe key for lmtp server
 - <code>mx_ssl</code>: ssl cert, key and CA for smtp in pem format
 
-- <code>domainkey</code>: Default Domainkey for DKIM
+- <code>dkim_private_key</code>: Default Domainkey for DKIM
 - <code>srs_secret</code>: secret for generating SRS strings
 - <code>srs_secret_old</code>: old/outdated secret for transition
 
