@@ -32,11 +32,6 @@ echo "* Import spamd manifest"
 svccfg import /tmp/spamd.xml
 rm /tmp/spamd.xml
 
-# Import exim manifest
-echo "* Import exim manifest"
-svccfg import /tmp/exim.xml
-rm /tmp/exim.xml
-
 # Update spamd and clamd
 echo "* Update spamd and clamd database"
 /opt/local/bin/freshclam
