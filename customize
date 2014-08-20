@@ -24,6 +24,7 @@ passwd -N spamd
 
 # Change default permissions for spamd folder
 echo "* Update permissions for spamassassin folders"
+mkdir /var/spamassassin/.spamassassin
 chown -R spamd:spamd /var/spamassassin
 chown -R spamd:spamd /opt/local/etc/spamassassin
 
