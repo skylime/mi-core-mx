@@ -6,7 +6,7 @@ MAILSTORE = /tmp
 
 # Prefix for Mail- and Alias-Lookup
 ACCOUNTPREFIX 	= mail.account:obj:
-ALIASPREFIX 	= mail.alias:obj:
+ALIASPREFIX     = mail.alias:obj:
 
 # SRS Base Values
 SRS_HASH_LENGTH=20
@@ -15,6 +15,7 @@ SRS_URL=http://www.infradead.org/rpr.html
 
 # Default Mailbox Server
 MAILBOX_SERVER = 127.0.0.1
+MAILBOX_SRV_PORT = 24
 
 .include LOCALCONF
 
@@ -191,11 +192,9 @@ begin routers
 		driver = redirect
 		# Don't rewrite if it's a bounce, or from one of our own addresses.
 		senders = ! : ! ${lookup redis{EXISTS ACCOUNTPREFIX${local_part}@${domain}}}
-		# Rewrite only if Entry in Alias-DB and Aliasdestination is external
-		condition = ${if or {\
-			{${lookup redis{EXISTS ACCOUNTPREFIX${${lookup redis{HGET ALIASPREFIX${quote_local_part:local_part}@${domain} to}}}}{false}{true}}}\
-			{${lookup redis{EXISTS ACCOUNTPREFIX${${lookup redis{HGET ALIASPREFIX*@${domain} to}}}}{false}{true}}}\
-			}{true}}
+		# Rewrite only if Entry in Alias-DB
+                condition = ${lookup redis{EXISTS ALIASPREFIX${local_part}@${domain}}}
+
 		# We want to rewrite. We just jump to the rpr_rewrite router which is itself unconditional.
 		data = ${quote_local_part:$local_part}@$domain
 		redirect_router = rpr_rewrite
