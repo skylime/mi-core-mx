@@ -1,3 +1,5 @@
 # Configuration File for spamassassin
+# only add X-Spam- headers and no changes to the body
+report_safe 0
 # using pyzor hash sharing system
 pyzor_options --homedir /opt/local/etc/spamassassin
