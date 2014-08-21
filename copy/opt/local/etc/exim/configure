@@ -238,7 +238,7 @@ begin routers
                 condition = ${lookup redis{EXISTS ACCOUNTPREFIX${lc:$local_part}@${domain}}}
                 route_data = MAILBOX_SERVER
                 self = send
-		transport = int_smtp
+		transport = int_lmtp
 
 	#>> dnslookup - for all mails to external recipients - if it's not in thedatabase
 	lookuphost:
