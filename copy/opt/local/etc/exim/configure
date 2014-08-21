@@ -52,12 +52,12 @@ timeout_frozen_after = 7d
 queue_only_load = 8
 message_size_limit = 100M
 
+daemon_smtp_ports = 25 : 465 : 587
+tls_on_connect_ports = 25 : 465 : 587
+
 tls_advertise_hosts = *
 tls_certificate = /opt/local/etc/exim/ssl/exim.pem
 tls_privatekey = /opt/local/etc/exim/ssl/exim.pem
-
-daemon_smtp_ports = 25 : 465 : 587
-tls_on_connect_ports = 465 : 587
 
 
 #>>
