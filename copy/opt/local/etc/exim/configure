@@ -7,6 +7,8 @@ MAILSTORE = /tmp
 # Prefix for Mail- and Alias-Lookup
 ACCOUNTPREFIX 	= mail.account:obj:
 ALIASPREFIX     = mail.alias:obj:
+DOMAINACC	= mail.account:idx:domain:
+DOMAINALI	= mail.alias:idx:domain:
 
 # SRS Base Values
 SRS_HASH_LENGTH=20
@@ -20,6 +22,7 @@ MAILBOX_SRV_PORT = 24
 .include LOCALCONF
 
 domainlist local_domains = LOCALDOMAIN : $primary_hostname
+localpartlist rfc2142_localparts = postmaster :  abuse : noc : security
 
 redis_servers = 127.0.0.1//
 
@@ -137,6 +140,15 @@ begin acl
 		  #>> localpart+tag@domainnaame.tld
 		  condition 	= ${if match{$local_part}{\N^([^+]+)\+([^+]+)\N} \
 		  				  {${lookup redis{EXISTS ACCOUNTPREFIX${lc:$1}@${domain}}}}}
+						
+		#>> we don't want them - but we take them - rfc2142 conform recipients
+		accept
+		  message = accepted (origin found.)
+		  #>> rfc2142-localpar@domainnaame.tld
+		  condition 	= ${if or{	{bool{${lookup redis{ZCARD DOMAINALI${domain}}}}} \
+		  				{bool{${lookup redis{ZCARD DOMAINACC${domain}}}}} \
+						} }
+		  local_parts	= +rfc2142_localparts
 
 		#>> SRS/RPR Bounce - check if valid
 		accept
