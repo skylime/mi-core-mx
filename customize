@@ -2,9 +2,17 @@
 #
 # Put customizations to your image in this file.
 
-MUNIN_PLUGIN_VERSION='0.2'
-
 PATH=/opt/local/gnu/bin:/opt/local/bin:/opt/local/sbin:/usr/bin:/usr/sbin
+
+# Munin plugins
+MUNIN_PLUGIN_SRC='/opt/local/lib/munin/plugins'
+MUNIN_PLUGIN_DST='/opt/local/etc/munin/plugins'
+MUNIN_PLUGINS=(
+	'clamav'
+	'exim_mailqueue'
+	'exim_mailstats'
+	'spamassassin'
+)
 
 # Exit if any commands fail
 set -o errexit
@@ -46,6 +54,22 @@ pkg_add http://pkgsrc.smartos.skylime.net/skylime-extra/2014Q2/x86_64/exim-4.82.
 # Install rblwatch script
 echo "* Install rblwatch script"
 pip install rblwatch
+
+# Activate munin plugins
+echo "* Activate munin plugins"
+for plugin in "${MUNIN_PLUGINS[@]}"; do
+	if [ ! -x ${MUNIN_PLUGIN_SRC}/${plugin} ]; then
+		plugin_src=${plugin%_*}_
+		[ ! -x ${MUNIN_PLUGIN_SRC}/${plugin_src} ] && \
+			plugin_src=${plugin_src%%_*}_
+	else
+		plugin_src=${plugin}
+	fi
+	if [[ -x ${MUNIN_PLUGIN_SRC}/${plugin_src} ]]; then
+		echo "  ${plugin}"
+		ln -sf ${MUNIN_PLUGIN_SRC}/${plugin_src} ${MUNIN_PLUGIN_DST}/${plugin}
+	fi
+done
 
 # Clean up
 echo "* Cleaning up."
