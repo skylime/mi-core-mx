@@ -286,36 +286,3 @@ begin retry
 #>> rewrite
 #>>
 begin rewrite
-
-
-#>>
-#>> authenticators
-#>>
-begin authenticators
-
-plain_auth:
-	driver = plaintext
-	public_name = PLAIN
-#	server_advertise_condition = ${if eq{$tls_cipher}{}{false}{true}}
-	server_prompts             = :
-	server_set_id = $2
-	server_condition = "\
-		${if and { \
-			{!eq{$2}{}} \
-			{!eq{$3}{}} \
-			{crypteq {$3}{\\\{crypt\\\}${lookup sqlite {MAILDB select password from accounts where email='$2';}}}} \
-			}{yes}{no}}"
-
-login_auth:
-	driver = plaintext
-	public_name = LOGIN
-#	server_advertise_condition = ${if eq{$tls_cipher}{}{false}{true}}
-	server_prompts             = Username:: : Password::
-	server_set_id = $auth1
-	server_condition = "\
-		${if and { \
-			{!eq{$auth1}{}} \
-			{!eq{$auth2}{}} \
-			{crypteq {$auth2}{\\\{crypt\\\}${lookup sqlite {MAILDB select password from accounts where email='$auth1';}}}} \
-			}{yes}{no}}"
-
