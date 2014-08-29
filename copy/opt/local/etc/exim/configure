@@ -252,6 +252,16 @@ begin routers
                 self = send
 		transport = int_lmtp
 
+	#>> forward special emails to administrator (rfc2142) if not delivered yet
+	administrativ_mails:
+		driver 		= redirect
+		local_parts 	= +rfc2142_localparts
+		condition 	= ${if or{	{bool{${lookup redis{ZCARD DOMAINALI${domain}}}}} \
+		  				{bool{${lookup redis{ZCARD DOMAINACC${domain}}}}} \
+						} }
+                data 		= +admin_contact
+		redirect_router = lookuphost
+
 	#>> dnslookup - for all mails to external recipients - if it's not in thedatabase
 	lookuphost:
 		driver = dnslookup
