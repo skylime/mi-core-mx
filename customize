@@ -51,6 +51,11 @@ echo "* Configuring image specific packages.";
 # Exim
 pkg_add http://pkgsrc.smartos.skylime.net/skylime-extra/2014Q2/x86_64/exim-4.82.1nb1.tgz
 
+# Create symlink for exim (mailq,sendmail,mail)
+echo "* Create symlink for exim (mailq,sendmail)"
+ln -sf ../../../opt/local/sbin/exim /opt/local/bin/mailq
+ln -sf ../../../opt/local/sbin/exim /opt/local/sbin/sendmail
+
 # Install rblwatch script
 echo "* Install rblwatch script"
 pip install rblwatch
