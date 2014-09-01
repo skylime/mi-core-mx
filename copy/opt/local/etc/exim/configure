@@ -21,8 +21,10 @@ MAILBOX_SRV_PORT = 24
 
 .include LOCALCONF
 
-domainlist local_domains = LOCALDOMAIN : $primary_hostname
-localpartlist rfc2142_localparts = postmaster :  abuse : noc : security
+domainlist local_domains = $primary_hostname : localhost
+
+# special handling for rfc 2142 usernames and for root
+localpartlist rfc2142_localparts = postmaster :  abuse : noc : security : root
 
 redis_servers = 127.0.0.1//
 
@@ -144,9 +146,11 @@ begin acl
 		#>> we don't want them - but we take them - rfc2142 conform recipients
 		accept
 		  message = accepted (origin found.)
-		  #>> rfc2142-localpar@domainnaame.tld
+		  #>> rfc2142-localpar@domainnaame.tld or without domain or hostname
 		  condition 	= ${if or{	{bool{${lookup redis{ZCARD DOMAINALI${domain}}}}} \
 		  				{bool{${lookup redis{ZCARD DOMAINACC${domain}}}}} \
+						{inlist{${domain}}{${listnamed{local_domains}}}} \
+						{eq{${domain}}{}} \
 						} }
 		  local_parts	= +rfc2142_localparts
 
@@ -258,6 +262,8 @@ begin routers
 		local_parts 	= +rfc2142_localparts
 		condition 	= ${if or{	{bool{${lookup redis{ZCARD DOMAINALI${domain}}}}} \
 		  				{bool{${lookup redis{ZCARD DOMAINACC${domain}}}}} \
+						{inlist{${domain}}{${listnamed{local_domains}}}} \
+						{eq{${domain}}{}} \
 						} }
                 data 		= ADMIN_CONTACT
 		redirect_router = lookuphost
