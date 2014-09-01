@@ -259,7 +259,7 @@ begin routers
 		condition 	= ${if or{	{bool{${lookup redis{ZCARD DOMAINALI${domain}}}}} \
 		  				{bool{${lookup redis{ZCARD DOMAINACC${domain}}}}} \
 						} }
-                data 		= +admin_contact
+                data 		= ADMIN_CONTACT
 		redirect_router = lookuphost
 
 	#>> dnslookup - for all mails to external recipients - if it's not in thedatabase

@@ -16,7 +16,7 @@ echo "primary_hostname = $(/usr/sbin/mdata-get sdc:hostname)" >> $EXIMLOCAL
 # Administrativ Emailaddress
 RFC2142_MAIL=$(/usr/sbin/mdata-get rfc2142_mail 2>/dev/null)
 MAIL_ADMINADDR=$(/usr/sbin/mdata-get mail_adminaddr 2>/dev/null)
-echo "addresslist admin_contact = ${RFC2142_MAIL:-${MAIL_ADMINADDR:='root'}}" >> $EXIMLOCAL
+echo "ADMIN_CONTACT = ${RFC2142_MAIL:-${MAIL_ADMINADDR:='root'}}" >> $EXIMLOCAL
 
 # Default DKIM
 mdata-get dkim_private_key > /opt/local/etc/exim/domain.key
