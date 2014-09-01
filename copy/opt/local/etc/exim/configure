@@ -179,11 +179,11 @@ begin acl
 		warn  spam = nobody:true
 		  add_header = X-Spam-Score: $spam_score
 		  add_header = X-Spam-Level: $spam_bar
-		  add_header = X-Spam-Report: $spam_report
 		# put Spam Flag in messages with score > 5
 		warn spam = nobody:true
 		  condition = ${if >{$spam_score_int}{50}{true}{false}}
 		  add_header = X-Spam-Flag: YES
+		  add_header = X-Spam-Report: $spam_report
 		# reject spam at high scores (> 12)
 		deny message = This message scored $spam_score spam points.
 		  spam = nobody:true
