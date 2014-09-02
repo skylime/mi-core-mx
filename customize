@@ -49,7 +49,7 @@ pyzor --homedir /opt/local/etc/spamassassin discover
 # Configuring image specific packages
 echo "* Configuring image specific packages.";
 # Exim
-pkg_add http://pkgsrc.smartos.skylime.net/skylime-extra/2014Q2/x86_64/exim-4.82.1nb1.tgz
+pkg_add http://pkgsrc.smartos.skylime.net/skylime-extra/2014Q2/x86_64/exim-4.82.1nb2.tgz
 
 # Create symlink for exim (mailq,sendmail,mail)
 echo "* Create symlink for exim (mailq,sendmail)"
