@@ -227,7 +227,7 @@ begin routers
                         ${lc:$address_data}}@\
                         ${domain}
                 data = ${lookup redis{HGET ALIASPREFIX${quote_local_part:$local_part}@${domain} to}{$value}fail}
-                redirect_router = lookuphost
+                redirect_router = intmailserver
 
         #>> look up adress and get some more adresses, catch all
         aliascatchall:
@@ -246,7 +246,7 @@ begin routers
                         ${lc:$address_data}}@\
                         ${domain}
                 data = ${lookup redis{HGET ALIASPREFIX*@${domain} to}{$value}fail}
-                redirect_router = lookuphost
+                redirect_router = intmailserver
 
 	#>> futher internal mailserver
 	intmailserver:
