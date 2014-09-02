@@ -149,7 +149,7 @@ begin acl
 		  #>> rfc2142-localpar@domainnaame.tld or without domain or hostname
 		  condition 	= ${if or{	{bool{${lookup redis{ZCARD DOMAINALI${domain}}}}} \
 		  				{bool{${lookup redis{ZCARD DOMAINACC${domain}}}}} \
-						{inlist{${domain}}{${listnamed{local_domains}}}} \
+						{inlist{${domain}}{${listnamed:local_domains}}} \
 						{eq{${domain}}{}} \
 						} }
 		  local_parts	= +rfc2142_localparts
@@ -262,7 +262,7 @@ begin routers
 		local_parts 	= +rfc2142_localparts
 		condition 	= ${if or{	{bool{${lookup redis{ZCARD DOMAINALI${domain}}}}} \
 		  				{bool{${lookup redis{ZCARD DOMAINACC${domain}}}}} \
-						{inlist{${domain}}{${listnamed{local_domains}}}} \
+						{inlist{${domain}}{${listnamed:local_domains}}} \
 						{eq{${domain}}{}} \
 						} }
                 data 		= ADMIN_CONTACT
