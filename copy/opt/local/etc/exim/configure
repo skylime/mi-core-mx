@@ -229,25 +229,6 @@ begin routers
                 data = ${lookup redis{HGET ALIASPREFIX${quote_local_part:$local_part}@${domain} to}{$value}fail}
                 redirect_router = alias
 
-        #>> look up adress and get some more adresses, catch all
-        aliascatchall:
-                caseful_local_part
-                driver = redirect
-                # Don't rewrite if it's a bounce, or from one of our own addresses.
-                senders = ! : ! ${lookup redis{EXISTS ACCOUNTPREFIX${local_part}@${domain}}}
-                # Rewrite only if Entry in Alias-DB
-                headers_add = "X-SRS-Rewrite: SMTP reverse-path rewritten from <$sender_address> by $primary_hostname\n\tSee SRS_URL"
-
-                # Encode sender address, hash and timestamp according to http://www.anarres.org/projects/srs/
-                # We try to keep the generated localpart small. We add our own tracking info to the domain part.
-                address_data = ${eval:($tod_epoch/86400)-13370}+\
-                        ${sender_address_domain}+$sender_address_local_part
-                errors_to = ${quote_local_part:SRS0+${length_SRS_HASH_LENGTH:${hmac{sha1}{SRS_SECRET}{${lc:$address_data}}}}+\
-                        ${lc:$address_data}}@\
-                        ${domain}
-                data = ${lookup redis{HGET ALIASPREFIX*@${domain} to}{$value}fail}
-                redirect_router = alias
-
 	#>> futher internal mailserver
 	intmailserver:
 		driver = manualroute
@@ -268,7 +249,26 @@ begin routers
                 data 		= ADMIN_CONTACT
 		redirect_router = lookuphost
 
+        #>> look up adress and get some more adresses, catch all
+        aliascatchall:
+                caseful_local_part
+                driver = redirect
+                # Don't rewrite if it's a bounce, or from one of our own addresses.
+                senders = ! : ! ${lookup redis{EXISTS ACCOUNTPREFIX${local_part}@${domain}}}
+                # Rewrite only if Entry in Alias-DB
+                headers_add = "X-SRS-Rewrite: SMTP reverse-path rewritten from <$sender_address> by $primary_hostname\n\tSee SRS_URL"
+
+                # Encode sender address, hash and timestamp according to http://www.anarres.org/projects/srs/
+                # We try to keep the generated localpart small. We add our own tracking info to the domain part.
+                address_data = ${eval:($tod_epoch/86400)-13370}+\
+                        ${sender_address_domain}+$sender_address_local_part
+                errors_to = ${quote_local_part:SRS0+${length_SRS_HASH_LENGTH:${hmac{sha1}{SRS_SECRET}{${lc:$address_data}}}}+\
+                        ${lc:$address_data}}@\
+                        ${domain}
+                data = ${lookup redis{HGET ALIASPREFIX*@${domain} to}{$value}fail}
+                redirect_router = alias
 	#>> dnslookup - for all mails to external recipients - if it's not in thedatabase
+
 	lookuphost:
 		driver = dnslookup
 		transport = remote_smtp
