@@ -210,6 +210,15 @@ begin routers
 		  {${quote_local_part:$1}@$domain}\
 		}
 
+        #>> internal mailserver
+        intmailserver:
+                driver = manualroute
+                condition = ${lookup redis{EXISTS ACCOUNTPREFIX${lc:$local_part}@${domain}}}
+                route_data = MAILBOX_SERVER
+                self = send
+                transport = int_lmtp
+                unseen = true
+
         #>> look up adress and get some more adresses
         alias:
                 caseful_local_part
@@ -227,27 +236,7 @@ begin routers
                         ${lc:$address_data}}@\
                         ${domain}
                 data = ${lookup redis{HGET ALIASPREFIX${quote_local_part:$local_part}@${domain} to}{$value}fail}
-                redirect_router = alias
-
-	#>> futher internal mailserver
-	intmailserver:
-		driver = manualroute
-                condition = ${lookup redis{EXISTS ACCOUNTPREFIX${lc:$local_part}@${domain}}}
-                route_data = MAILBOX_SERVER
-                self = send
-		transport = int_lmtp
-
-	#>> forward special emails to administrator (rfc2142) if not delivered yet
-	administrativ_mails:
-		driver 		= redirect
-		local_parts 	= +rfc2142_localparts
-		condition 	= ${if or{	{bool{${lookup redis{ZCARD DOMAINALI${domain}}}}} \
-		  				{bool{${lookup redis{ZCARD DOMAINACC${domain}}}}} \
-						{inlist{${domain}}{${listnamed:local_domains}}} \
-						{eq{${domain}}{}} \
-						} }
-                data 		= ADMIN_CONTACT
-		redirect_router = lookuphost
+                redirect_router = intmailserver
 
         #>> look up adress and get some more adresses, catch all
         aliascatchall:
@@ -266,14 +255,34 @@ begin routers
                         ${lc:$address_data}}@\
                         ${domain}
                 data = ${lookup redis{HGET ALIASPREFIX*@${domain} to}{$value}fail}
-                redirect_router = alias
-	#>> dnslookup - for all mails to external recipients - if it's not in thedatabase
+                redirect_router = intmailserver
 
+	#>> forward special emails to administrator (rfc2142) if not delivered yet
+	administrativ_mails:
+		driver 		= redirect
+		local_parts 	= +rfc2142_localparts
+		condition 	= ${if or{	{bool{${lookup redis{ZCARD DOMAINALI${domain}}}}} \
+		  				{bool{${lookup redis{ZCARD DOMAINACC${domain}}}}} \
+						{inlist{${domain}}{${listnamed:local_domains}}} \
+						{eq{${domain}}{}} \
+						} }
+                data 		= ADMIN_CONTACT
+		redirect_router = intmailserver
+
+	#>> dnslookup - for all mails to external recipients - if it's not in thedatabase
 	lookuphost:
 		driver = dnslookup
 		transport = remote_smtp
+		condition = ${lookup redis{EXISTS ACCOUNTPREFIX${lc:$local_part}@${domain}}{false}{true}}
 		ignore_target_hosts = 0.0.0.0 : 127.0.0.0/8
 		no_more
+	
+	#>> filter allready delivered Mails before bounce
+	allreadydelivered:
+		driver = accept
+		condition = ${lookup redis{EXISTS ACCOUNTPREFIX${lc:$local_part}@${domain}}}
+		transport = devnull
+		
 
 #>>
 #>> transport
@@ -291,16 +300,10 @@ begin transports
                 driver = smtp
                 protocol = lmtp
                 port = MAILBOX_SRV_PORT
-	#>> Maildir at this host
-	localdir:
+	#>> for mails allready routed	
+	devnull:
 		driver = appendfile
-		user = mail
-		maildir_format
-		delivery_date_add
-		envelope_to_add
-		return_path_add
-
-
+		file = /dev/null
 
 #>>
 #>> retry
