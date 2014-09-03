@@ -238,6 +238,12 @@ begin routers
                 data = ${lookup redis{HGET ALIASPREFIX${quote_local_part:$local_part}@${domain} to}{$value}fail}
                 redirect_router = intmailserver
 
+	#>> filter allready delivered Mails 
+	allreadydelivered:
+		driver = accept
+		condition = ${lookup redis{EXISTS ACCOUNTPREFIX${lc:$local_part}@${domain}}}
+		transport = devnull
+		
         #>> look up adress and get some more adresses, catch all
         aliascatchall:
                 caseful_local_part
@@ -273,16 +279,9 @@ begin routers
 	lookuphost:
 		driver = dnslookup
 		transport = remote_smtp
-		condition = ${lookup redis{EXISTS ACCOUNTPREFIX${lc:$local_part}@${domain}}{false}{true}}
 		ignore_target_hosts = 0.0.0.0 : 127.0.0.0/8
 		no_more
 	
-	#>> filter allready delivered Mails before bounce
-	allreadydelivered:
-		driver = accept
-		condition = ${lookup redis{EXISTS ACCOUNTPREFIX${lc:$local_part}@${domain}}}
-		transport = devnull
-		
 
 #>>
 #>> transport
