@@ -5,9 +5,11 @@ Please refer to https://github.com/joyent/mibe for use of this repo.
 
 ## mdata variables
 
-- <code>api_redis_addr</code>: ip or hostname of api server
+- <code>api_redis_addr</code>: ip or hostname of api server, ip addresses
+  requires squared brackets
 - <code>api_redis_key</code>: base64 encoded spipe key for api server
-- <code>mbox_lmtp_addr</code>: ip or hostname of lmtp server
+- <code>mbox_lmtp_addr</code>: ip or hostname of lmtp server, ip addresses
+  requires squared brackets
 - <code>mbox_lmtp_key</code>: base64 encoded spipe key for lmtp server
 - <code>mx_ssl</code>: ssl cert, key and CA for smtp in pem format
 
