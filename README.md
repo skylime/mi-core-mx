@@ -1,24 +1,35 @@
-mi-core-mx
-==========
+# mi-core-mx
 
-Please refer to https://github.com/joyent/mibe for use of this repo.
+This repository is based on [Joyent mibe](https://github.com/joyent/mibe). Please note this repository should be build with the [mi-core-base](https://github.com/skylime/mi-core-base) mibe image.
+
+## description
+
+SMTP MX / incoming server based on exim.
+
+This image is part of the following images:
+
+- [mi-core-mailapi](https://github.com/skylime/mi-core-mailapi)
+- [mi-core-mx](https://github.com/skylime/mi-core-mx)
+- [mi-core-submission](https://github.com/skylime/mi-core-submission)
+- [mi-core-mbox](https://github.com/skylime/mi-core-mbox)
+- [mi-core-webmail](://github.com/skylime/mi-core-webmail)
 
 ## mdata variables
 
-- <code>api_redis_addr</code>: ip or hostname of api server, ip addresses
-  requires squared brackets
-- <code>api_redis_key</code>: base64 encoded spipe key for api server
-- <code>mbox_lmtp_addr</code>: ip or hostname of lmtp server, ip addresses
-  requires squared brackets
-- <code>mbox_lmtp_key</code>: base64 encoded spipe key for lmtp server
-- <code>mx_ssl</code>: ssl cert, key and CA for smtp in pem format
+- `api_redis_addr` [*]: ip or hostname of api server, ip addresses requires squared brackets
+- `api_redis_key` [*]: base64 encoded spipe key for api server
+- `mbox_lmtp_addr` [*]: ip or hostname of lmtp server, ip addresses requires squared brackets
+- `mbox_lmtp_key` [*]: base64 encoded spipe key for lmtp server
+- `mx_ssl` [*]: ssl cert, key and CA for smtp in pem format
 
-- <code>dkim_private_key</code>: Default Domainkey for DKIM
-- <code>srs_secret</code>: secret for generating SRS strings
-- <code>srs_secret_old</code>: old/outdated secret for transition
+- `dkim_private_key` [*]: Default Domainkey for DKIM
+- `srs_secret` [*]: secret for generating SRS strings
+- `srs_secret_old` [*]: old/outdated secret for transition
+
+[*] is required to work properly.
 
 ## services
 
-- <code>25/tcp</code>: smtp
-- <code>465/tcp</code>: smtp encrypted
-- <code>587/tcp</code>: smtp encrypted
+- `25/tcp`: smtp
+- `465/tcp`: smtp encrypted
+- : smtp encrypted
