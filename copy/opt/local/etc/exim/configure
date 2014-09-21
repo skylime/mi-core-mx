@@ -205,8 +205,8 @@ begin routers
 		caseful_local_part
 		driver = redirect
 		data = ${if match{$local_part}{\N^([^+]+)\+([^+]+)\N} \
-		  {${quote_local_part:$1}@$domain}\
-		}
+		         {${quote_local_part:$1}@$domain}\
+		        }
 	#>> internal mailserver
 	intmailserver:
 		driver     = manualroute
