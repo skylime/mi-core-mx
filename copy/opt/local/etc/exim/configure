@@ -1,22 +1,23 @@
 # $Id$
 # Copyright 2014 core.io
+# vim: noai:ts=4:sw=4
 
 LOCALCONF = /opt/local/etc/exim/configure.local
 MAILSTORE = /tmp
 
 # Prefix for Mail- and Alias-Lookup
-ACCOUNTPREFIX 	= mail.account:obj:
-ALIASPREFIX     = mail.alias:obj:
-DOMAINACC	= mail.account:idx:domain:
-DOMAINALI	= mail.alias:idx:domain:
+ACCOUNTPREFIX = mail.account:obj:
+ALIASPREFIX   = mail.alias:obj:
+DOMAINACC     = mail.account:idx:domain:
+DOMAINALI     = mail.alias:idx:domain:
 
 # SRS Base Values
-SRS_HASH_LENGTH=20
-SRS_DSN_TIMEOUT=10
-SRS_URL=http://www.infradead.org/rpr.html
+SRS_HASH_LENGTH = 20
+SRS_DSN_TIMEOUT = 10
+SRS_URL         = http://www.infradead.org/rpr.html
 
 # Default Mailbox Server
-MAILBOX_SERVER = 127.0.0.1
+MAILBOX_SERVER   = 127.0.0.1
 MAILBOX_SRV_PORT = 24
 
 .include LOCALCONF
@@ -48,21 +49,21 @@ acl_smtp_helo = acl_check_helo
 acl_smtp_rcpt = acl_check_rcpt
 acl_smtp_data = acl_check_data
 
-never_users = root
-host_lookup = *
-rfc1413_hosts = *
-rfc1413_query_timeout = 5s
+never_users                = root
+host_lookup                = *
+rfc1413_hosts              = *
+rfc1413_query_timeout      = 5s
 ignore_bounce_errors_after = 2d
-timeout_frozen_after = 7d
-queue_only_load = 8
-message_size_limit = 100M
+timeout_frozen_after       = 7d
+queue_only_load            = 8
+message_size_limit         = 100M
 
-daemon_smtp_ports = 25 : 465 : 587
+daemon_smtp_ports    = 25 : 465 : 587
 tls_on_connect_ports = 465 : 587
 
 tls_advertise_hosts = *
-tls_certificate = /opt/local/etc/exim/ssl/exim.pem
-tls_privatekey = /opt/local/etc/exim/ssl/exim.pem
+tls_certificate     = /opt/local/etc/exim/ssl/exim.pem
+tls_privatekey      = /opt/local/etc/exim/ssl/exim.pem
 
 
 #>>
@@ -72,216 +73,206 @@ begin acl
 	acl_check_helo:
 		#>> Hosts listed on submissionlist are allowed to submit messages
 		accept
-		  hosts         = +submission_hosts
+			hosts         = +submission_hosts
 		#>> Hosts listed on relaylist are allowed to submit messages
 		accept
-		  hosts         = +relay_from_hosts
+			hosts         = +relay_from_hosts
 		#>> deny if listed at spamhaus
 		deny
-		  message       = Sorry: $sender_host_address failed in Reverse DNS Lookup (get serious!)
-		  log_message   = $sender_host_address failed in Reverse DNS Lookup - Connection denied after HELO
-		  !verify		= reverse_host_lookup
+			message       = Sorry: $sender_host_address failed in Reverse DNS Lookup (get serious!)
+			log_message   = $sender_host_address failed in Reverse DNS Lookup - Connection denied after HELO
+			!verify       = reverse_host_lookup
 		deny
-		  message       = Sorry: HELO not suitable (has to match hostname)
-		  log_message   = $sender_host_address failed in HELO/EHLO - Connection denied after HELO
-		  !verify		= helo
+			message       = Sorry: HELO not suitable (has to match hostname)
+			log_message   = $sender_host_address failed in HELO/EHLO - Connection denied after HELO
+			!verify       = helo
 		#>> DNSBLs
 		#>> deny if listed at spamhaus
 		deny
-		  message       = Sorry: $sender_host_address is listed at $dnslist_domain ($dnslist_text)
-		  log_message   = $sender_host_address is listed at $dnslist_domain ($dnslist_value: $dnslist_text)
-		  dnslists      = zen.spamhaus.org
+			message       = Sorry: $sender_host_address is listed at $dnslist_domain ($dnslist_text)
+			log_message   = $sender_host_address is listed at $dnslist_domain ($dnslist_value: $dnslist_text)
+			dnslists      = zen.spamhaus.org
 		accept
 
 	acl_check_rcpt:
 		#>> deny if no HELO/EHLO send first
 		deny
-		  message		= HELO first please
-		  log_message 	= $sender_host_address failed - HELO/EHLO missing
-		  !verify		= helo
-		  
+			message       = HELO first please
+			log_message   = $sender_host_address failed - HELO/EHLO missing
+			!verify       = helo
 		#>> deny strange characters
 		deny
-		  message       = Restricted characters in address
-		  local_parts   = ^[./|] : ^.*[@%!] : ^.*/\\.\\./
-		
+			message       = Restricted characters in address
+			local_parts   = ^[./|] : ^.*[@%!] : ^.*/\\.\\./
 		#>> local generated and authenticated mails will get header fixups 
 		accept
-		  authenticated = *
-		  hosts         = +submission_hosts
-		  control       = submission/domain=
-
+			authenticated = *
+			hosts         = +submission_hosts
+			control       = submission/domain=
 		#>> libspf2 library from http://www.libspf2.org/
 		deny 
-		  message = [SPF] $sender_host_address is not allowed to send mail from \
-		              ${if def:sender_address_domain {$sender_address_domain}{$sender_helo_name}}.  \
-		              Please see http://www.openspf.org/why.html?sender=$sender_address&ip=$sender_host_address
-		  log_message = SPF check failed.
-		  spf = fail
-
+			message     = [SPF] $sender_host_address is not allowed to send mail from \
+			              ${if def:sender_address_domain {$sender_address_domain}{$sender_helo_name}}. \
+			              Please see http://www.openspf.org/why.html?sender=$sender_address&ip=$sender_host_address
+			log_message = SPF check failed.
+			spf         = fail
 		#>> dns host lookup
 		warn
-		  message        = X-Host-Lookup-Failed: Reverse DNS lookup failed for $sender_host_address \
-		                   (${if eq{$host_lookup_failed}{1}{failed}{deferred}})
-		  condition      = ${if and{{def:sender_host_address}{!def:sender_host_name}}\
-		                   {yes}{no}}
-
+			message     = X-Host-Lookup-Failed: Reverse DNS lookup failed for $sender_host_address \
+			              (${if eq{$host_lookup_failed}{1}{failed}{deferred}})
+			condition   = ${if and{{def:sender_host_address}{!def:sender_host_name}} \
+			              {yes}{no}}
 		#>> relay only for mails in alias-list or main-list
 		#>> redis' HEXISTS leads to 1 for success and 0 for not found - perfect for 'condition'
 		accept
-		  message = accepted (user found)
-		  #>> wildcard for catchall
-		  condition 	= ${if or{	{bool{${lookup redis{EXISTS ALIASPREFIX${local_part}@${domain}}}}} \
-		  				{bool{${lookup redis{EXISTS ACCOUNTPREFIX${local_part}@${domain}}}}} \
-						{bool{${lookup redis{EXISTS ALIASPREFIX*@${domain}}}}} \
-						} }
-
+			message   = accepted (user found)
+			# wildcard for catchall
+			condition = ${if or{{bool{${lookup redis{EXISTS ALIASPREFIX${local_part}@${domain}}}}} \
+			              {bool{${lookup redis{EXISTS ACCOUNTPREFIX${local_part}@${domain}}}}} \
+			              {bool{${lookup redis{EXISTS ALIASPREFIX*@${domain}}}}} \
+			             } }
 		#>> relay also mails tagged with + in address
 		accept
-		  message = accepted (origin found)
-		  #>> localpart+tag@domainnaame.tld
-		  condition 	= ${if match{$local_part}{\N^([^+]+)\+([^+]+)\N} \
-		  				  {${lookup redis{EXISTS ACCOUNTPREFIX${lc:$1}@${domain}}}}}
-						
+			message   = accepted (origin found)
+			# localpart+tag@domainnaame.tld
+			condition = ${if match{$local_part}{\N^([^+]+)\+([^+]+)\N} \
+			             {${lookup redis{EXISTS ACCOUNTPREFIX${lc:$1}@${domain}}}}}
 		#>> we don't want them - but we take them - rfc2142 conform recipients
 		accept
-		  message = accepted (origin found.)
-		  #>> rfc2142-localpar@domainnaame.tld or without domain or hostname
-		  condition 	= ${if or{	{bool{${lookup redis{ZCARD DOMAINALI${domain}}}}} \
-		  				{bool{${lookup redis{ZCARD DOMAINACC${domain}}}}} \
-						{inlist{${domain}}{${listnamed:local_domains}}} \
-						{eq{${domain}}{}} \
-						} }
-		  local_parts	= +rfc2142_localparts
-
+			message   = accepted (origin found.)
+			# rfc2142-localpar@domainnaame.tld or without domain or hostname
+			condition = ${if or{{bool{${lookup redis{ZCARD DOMAINALI${domain}}}}} \
+			              {bool{${lookup redis{ZCARD DOMAINACC${domain}}}}} \
+			              {inlist{${domain}}{${listnamed:local_domains}}} \
+			              {eq{${domain}}{}} \
+			             } }
+			local_parts	= +rfc2142_localparts
 		#>> SRS/RPR Bounce - check if valid
 		accept
-		  message 	= accepted (our reverse path)
-		  condition = ${if match{$local_part}{\N^[sS][rR][sS]0\+([^+]+)\+([0-9]+)\+([^+]+)\+(.*)\N}{\
-		  			${if and{\
-					{or{{eq {$1}{${length_SRS_HASH_LENGTH:${hmac{sha1}{SRS_SECRET}{${lc:$2+$3+$4@$domain}}}}}}\
-					{eq{$1}{${length_SRS_HASH_LENGTH:${hmac{sha1}{SRS_OLD_SECRET}{${lc:$2+$3+$4@$domain}}}}}}}\
-					}\
-					{>{$2}{${eval:$tod_epoch/86400-13370-SRS_DSN_TIMEOUT}}}\
-					{<={$2}{${eval:$tod_epoch/86400-13370}}}\
-					}{true}{false}}}}
-
+			message   = accepted (our reverse path)
+			condition = ${if match{$local_part}{\N^[sS][rR][sS]0\+([^+]+)\+([0-9]+)\+([^+]+)\+(.*)\N}{\
+			             ${if and{\
+			               {or{{eq {$1}{${length_SRS_HASH_LENGTH:${hmac{sha1}{SRS_SECRET}{${lc:$2+$3+$4@$domain}}}}}}\
+			               {eq{$1}{${length_SRS_HASH_LENGTH:${hmac{sha1}{SRS_OLD_SECRET}{${lc:$2+$3+$4@$domain}}}}}}}\
+			              }\
+			             {>{$2}{${eval:$tod_epoch/86400-13370-SRS_DSN_TIMEOUT}}}\
+			             {<={$2}{${eval:$tod_epoch/86400-13370}}}\
+			             }{true}{false}}}}
+		#>> deny everything else
 		deny
-		  message = relay not permitted - recipient unknown
+			message = relay not permitted - recipient unknown
 
 	acl_check_data:
 		#>> the clamav job 
-		deny message = This message contains malware ($malware_name)
-		  demime = *
-		  malware = *
-		
-		# put headers in all messages (no matter if spam or not)
-		warn  spam = nobody:true
-		  add_header = X-Spam-Score: $spam_score
-		  add_header = X-Spam-Level: $spam_bar
-		# put Spam Flag in messages with score > 5
-		warn spam = nobody:true
-		  condition = ${if >{$spam_score_int}{50}{true}{false}}
-		  add_header = X-Spam-Flag: YES
-		  add_header = X-Spam-Report: $spam_report
-		# reject spam at high scores (> 12)
-		deny message = This message scored $spam_score spam points.
-		  spam = nobody:true
-		  condition = ${if >{$spam_score_int}{120}{true}{false}}
+		deny
+			message = This message contains malware ($malware_name)
+			demime  = *
+			malware = *
+		#>> put headers in all messages (no matter if spam or not)
+		warn
+			spam       = nobody:true
+			add_header = X-Spam-Score: $spam_score
+			add_header = X-Spam-Level: $spam_bar
+		#>> put Spam Flag in messages with score > 5
+		warn
+			spam       = nobody:true
+			condition  = ${if >{$spam_score_int}{50}{true}{false}}
+			add_header = X-Spam-Flag: YES
+			add_header = X-Spam-Report: $spam_report
+		#>> reject spam at high scores (> 12)
+		deny
+			message   = This message scored $spam_score spam points.
+			spam      = nobody:true
+			condition = ${if >{$spam_score_int}{120}{true}{false}}
+		#>> default accept
 		accept
+
 
 #>>
 #>> router
 #>>
 begin routers
-
+	#>>
 	rpr_bounce:
 		caseful_local_part
-		driver = redirect
-		data = ${if match {$local_part}{\N^[sS][rR][sS]0\+([^+]+)\+([0-9]+)\+([^+]+)\+(.*)\N} \
-		  {${quote_local_part:$4}@$3}\
-		  }
+		driver      = redirect
+		data        = ${if match {$local_part}{\N^[sS][rR][sS]0\+([^+]+)\+([0-9]+)\+([^+]+)\+(.*)\N} \
+		                {${quote_local_part:$4}@$3}\
+		               }
 		headers_add = X-SRS-Return: DSN routed via $primary_hostname. See SRS_URL
-
+	#>>
 	tag_rewrite:
 		caseful_local_part
 		driver = redirect
 		data = ${if match{$local_part}{\N^([^+]+)\+([^+]+)\N} \
 		  {${quote_local_part:$1}@$domain}\
 		}
-
-        #>> internal mailserver
-        intmailserver:
-                driver = manualroute
-                condition = ${lookup redis{EXISTS ACCOUNTPREFIX${lc:$local_part}@${domain}}}
-                route_data = MAILBOX_SERVER
-                self = send
-                transport = int_lmtp
-                unseen = true
-
-        #>> look up adress and get some more adresses
-        alias:
-                caseful_local_part
-                driver = redirect
-                # Don't rewrite if it's a bounce, or from one of our own addresses.
-                senders = ! : ! ${lookup redis{EXISTS ACCOUNTPREFIX${local_part}@${domain}}}
-                # Rewrite only if Entry in Alias-DB
-                headers_add = "X-SRS-Rewrite: SMTP reverse-path rewritten from <$sender_address> by $primary_hostname\n\tSee SRS_URL"
-
-                # Encode sender address, hash and timestamp according to http://www.anarres.org/projects/srs/
-                # We try to keep the generated localpart small. We add our own tracking info to the domain part.
-                address_data = ${eval:($tod_epoch/86400)-13370}+\
-                        ${sender_address_domain}+$sender_address_local_part
-                errors_to = ${quote_local_part:SRS0+${length_SRS_HASH_LENGTH:${hmac{sha1}{SRS_SECRET}{${lc:$address_data}}}}+\
-                        ${lc:$address_data}}@\
-                        ${domain}
-                data = ${lookup redis{HGET ALIASPREFIX${quote_local_part:$local_part}@${domain} to}{$value}fail}
-                redirect_router = intmailserver
-
+	#>> internal mailserver
+	intmailserver:
+		driver     = manualroute
+		condition  = ${lookup redis{EXISTS ACCOUNTPREFIX${lc:$local_part}@${domain}}}
+		route_data = MAILBOX_SERVER
+		self       = send
+		transport  = int_lmtp
+		unseen     = true
+	#>> look up adress and get some more adresses
+	alias:
+		caseful_local_part
+		driver = redirect
+		# Don't rewrite if it's a bounce, or from one of our own addresses.
+		senders = ! : ! ${lookup redis{EXISTS ACCOUNTPREFIX${local_part}@${domain}}}
+		# Rewrite only if Entry in Alias-DB
+		headers_add = "X-SRS-Rewrite: SMTP reverse-path rewritten from <$sender_address> by $primary_hostname\n\tSee SRS_URL"
+		# Encode sender address, hash and timestamp according to http://www.anarres.org/projects/srs/
+		# We try to keep the generated localpart small. We add our own tracking info to the domain part.
+		address_data    = ${eval:($tod_epoch/86400)-13370}+\
+		                   ${sender_address_domain}+$sender_address_local_part
+		errors_to       = ${quote_local_part:SRS0+${length_SRS_HASH_LENGTH:${hmac{sha1}{SRS_SECRET}{${lc:$address_data}}}}+\
+		                   ${lc:$address_data}}@\
+		                   ${domain}
+		data            = ${lookup redis{HGET ALIASPREFIX${quote_local_part:$local_part}@${domain} to}{$value}fail}
+		redirect_router = intmailserver
 	#>> filter allready delivered Mails 
 	allreadydelivered:
-		driver = accept
+		driver    = accept
 		condition = ${lookup redis{EXISTS ACCOUNTPREFIX${lc:$local_part}@${domain}}}
 		transport = devnull
 		
-        #>> look up adress and get some more adresses, catch all
-        aliascatchall:
-                caseful_local_part
-                driver = redirect
-                # Don't rewrite if it's a bounce, or from one of our own addresses.
-                senders = ! : ! ${lookup redis{EXISTS ACCOUNTPREFIX${local_part}@${domain}}}
-                # Rewrite only if Entry in Alias-DB
-                headers_add = "X-SRS-Rewrite: SMTP reverse-path rewritten from <$sender_address> by $primary_hostname\n\tSee SRS_URL"
-
-                # Encode sender address, hash and timestamp according to http://www.anarres.org/projects/srs/
-                # We try to keep the generated localpart small. We add our own tracking info to the domain part.
-                address_data = ${eval:($tod_epoch/86400)-13370}+\
-                        ${sender_address_domain}+$sender_address_local_part
-                errors_to = ${quote_local_part:SRS0+${length_SRS_HASH_LENGTH:${hmac{sha1}{SRS_SECRET}{${lc:$address_data}}}}+\
-                        ${lc:$address_data}}@\
-                        ${domain}
-                data = ${lookup redis{HGET ALIASPREFIX*@${domain} to}{$value}fail}
-                redirect_router = intmailserver
-
+	#>> look up adress and get some more adresses, catch all
+	aliascatchall:
+		caseful_local_part
+		driver          = redirect
+		# Don't rewrite if it's a bounce, or from one of our own addresses.
+		senders         = ! : ! ${lookup redis{EXISTS ACCOUNTPREFIX${local_part}@${domain}}}
+		# Rewrite only if Entry in Alias-DB
+		headers_add     = "X-SRS-Rewrite: SMTP reverse-path rewritten from <$sender_address> by $primary_hostname\n\tSee SRS_URL"
+		# Encode sender address, hash and timestamp according to http://www.anarres.org/projects/srs/
+		# We try to keep the generated localpart small. We add our own tracking info to the domain part.
+		address_data    = ${eval:($tod_epoch/86400)-13370}+\
+		                  ${sender_address_domain}+$sender_address_local_part
+		errors_to       = ${quote_local_part:SRS0+${length_SRS_HASH_LENGTH:${hmac{sha1}{SRS_SECRET}{${lc:$address_data}}}}+\
+		                  ${lc:$address_data}}@\
+		                  ${domain}
+		data            = ${lookup redis{HGET ALIASPREFIX*@${domain} to}{$value}fail}
+		redirect_router = intmailserver
 	#>> forward special emails to administrator (rfc2142) if not delivered yet
 	administrativ_mails:
-		driver 		= redirect
-		local_parts 	= +rfc2142_localparts
-		condition 	= ${if or{	{bool{${lookup redis{ZCARD DOMAINALI${domain}}}}} \
-		  				{bool{${lookup redis{ZCARD DOMAINACC${domain}}}}} \
-						{inlist{${domain}}{${listnamed:local_domains}}} \
-						{eq{${domain}}{}} \
-						} }
-                data 		= ADMIN_CONTACT
+		driver          = redirect
+		local_parts     = +rfc2142_localparts
+		condition       = ${if or{{bool{${lookup redis{ZCARD DOMAINALI${domain}}}}} \
+		                    {bool{${lookup redis{ZCARD DOMAINACC${domain}}}}} \
+		                    {inlist{${domain}}{${listnamed:local_domains}}} \
+		                    {eq{${domain}}{}} \
+		                   } }
+		data            = ADMIN_CONTACT
 		redirect_router = intmailserver
-
 	#>> dnslookup - for all mails to external recipients - if it's not in thedatabase
 	lookuphost:
-		driver = dnslookup
-		transport = remote_smtp
+		driver              = dnslookup
+		transport           = remote_smtp
 		ignore_target_hosts = 0.0.0.0 : 127.0.0.0/8
 		no_more
-	
+
 
 #>>
 #>> transport
@@ -289,27 +280,27 @@ begin routers
 begin transports
 	#>> smtp
 	remote_smtp:
-		driver = smtp
-		dkim_domain = ${sender_address_domain}
-		dkim_selector = dkim
+		driver           = smtp
+		dkim_domain      = ${sender_address_domain}
+		dkim_selector    = dkim
 		dkim_private_key = DEFAULT_DOMAINKEY
-		dkim_canon = relaxed
+		dkim_canon       = relaxed
 	#>> via lmtp to our own Infrstructure
-        int_lmtp:
-                driver = smtp
-                protocol = lmtp
-                port = MAILBOX_SRV_PORT
-	#>> for mails allready routed	
+	int_lmtp:
+		driver   = smtp
+		protocol = lmtp
+		port     = MAILBOX_SRV_PORT
+	#>> for mails allready routed
 	devnull:
 		driver = appendfile
-		file = /dev/null
+		file   = /dev/null
 
 #>>
 #>> retry
 #>>
 begin retry
-127.0.0.1       *       H,60d,1m,10
-*		*	F,2h,15m; G,16h,1h,1.5; F,4d,6h
+127.0.0.1  *  H,60d,1m,10
+*          *  F,2h,15m; G,16h,1h,1.5; F,4d,6h
 
 
 #>>
