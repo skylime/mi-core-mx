@@ -32,4 +32,4 @@ This image is part of the following images:
 
 - `25/tcp`: smtp
 - `465/tcp`: smtp encrypted
-- : smtp encrypted
+- `587/tcp`: smtp encrypted
