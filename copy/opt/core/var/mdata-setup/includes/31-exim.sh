@@ -26,3 +26,9 @@ echo "DEFAULT_DOMAINKEY = /opt/local/etc/exim/domain.key" >> $EXIMLOCAL
 # Define old an new to be able to change secrets
 echo "SRS_SECRET = $(mdata-get srs_secret)" >> $EXIMLOCAL
 echo "SRS_OLD_SECRET = $(mdata-get srs_secret_old)" >> $EXIMLOCAL
+
+if mdata-get dkim_selector 1>/dev/null 2>&1; then
+	echo "DKIM_SELECTOR = $(mdata-get dkim_selector)" >> $EXIMLOCAL
+else
+	echo "DKIM_SELECTOR = dkim" >> $EXIMLOCAL
+fi

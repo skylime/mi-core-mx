@@ -22,6 +22,7 @@ This image is part of the following images:
 - `mbox_lmtp_key` [*]: base64 encoded spipe key for lmtp server
 - `mx_ssl` [*]: ssl cert, key and CA for smtp in pem format
 
+- `dkim_selector`: DKIM selector (default is dkim)
 - `dkim_private_key` [*]: Default Domainkey for DKIM
 - `srs_secret` [*]: secret for generating SRS strings
 - `srs_secret_old` [*]: old/outdated secret for transition

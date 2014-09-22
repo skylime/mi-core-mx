@@ -282,7 +282,7 @@ begin transports
 	remote_smtp:
 		driver           = smtp
 		dkim_domain      = ${sender_address_domain}
-		dkim_selector    = dkim
+		dkim_selector    = DKIM_SELECTOR
 		dkim_private_key = DEFAULT_DOMAINKEY
 		dkim_canon       = relaxed
 	#>> via lmtp to our own Infrstructure
