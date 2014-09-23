@@ -22,6 +22,9 @@ MAILBOX_SRV_PORT = 24
 
 .include LOCALCONF
 
+# security reasons
+smtp_accept_max = 500
+
 domainlist local_domains = $primary_hostname : localhost
 
 # special handling for rfc 2142 usernames and for root
