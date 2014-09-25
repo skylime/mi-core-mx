@@ -1,7 +1,12 @@
-## Changelog for mi-core-mx
+## Change Log
 
-### 14.2.0 (2014/09/21 16:47 +00:00)
+### 14.2.1 (2014/09/25 20:23 +00:00)
+- [79ddd03](https://github.com/skylime/mi-core-mx/commit/79ddd03f954fdf6f2ba064e95cc45757310ce52c) Add dkim selector, it's easier to update to a newer key (@drscream)
+- [92fa49c](https://github.com/skylime/mi-core-mx/commit/92fa49cfc4aac4510c1620e956d72d7479ec5893) max connections set to 500 (@BroSys)
+- [5498519](https://github.com/skylime/mi-core-mx/commit/549851904a54e8d158f34301cd272dce93cf1f03) update to new core-base image: a6fb1ff0-4333-11e4-a0e1-370c81688134 (@drscream)
+- [474c4f0](https://github.com/skylime/mi-core-mx/commit/474c4f076468ca114998d0efaf5e8a2bbca63b6a) update version number (@drscream)
 
+### 14.2.0 (2014/09/21 16:48 +00:00)
 - [3fe73b4](https://github.com/skylime/mi-core-mx/commit/3fe73b4e91d6b85f38c4f1b40893d731f2156ac0) Initial release (@dcrudgington)
 - [f257eb3](https://github.com/skylime/mi-core-mx/commit/f257eb37c85ba5064d7780b282408e950d3cd34d) Added LICENSE and copy directory (@dcrudgington)
 - [d631523](https://github.com/skylime/mi-core-mx/commit/d6315237ff15b5d07a9dd1cc1dc3e0e55fe84414) Added var/zoneinit/includes directory (@dcrudgington)
@@ -113,3 +118,4 @@
 - [c6d751b](https://github.com/skylime/mi-core-mx/commit/c6d751b042caa57fa1cf2c4c450c004a1e8c8f00) cleanup configuration file to use tabs (@drscream)
 - [0ac50ae](https://github.com/skylime/mi-core-mx/commit/0ac50ae1c54628c3dee9ed3c9bc769de385a94dd) cleanup configuration file to use tabs (@drscream)
 - [537b381](https://github.com/skylime/mi-core-mx/commit/537b3819ea8f14c3a4fe33a3151c7564b9d07e5a) fix readme and license file (@drscream)
+- [eb188d0](https://github.com/skylime/mi-core-mx/commit/eb188d0e76413eb17549aa827c061a13695a6486) add changelog (@drscream)
