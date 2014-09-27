@@ -1,121 +1,151 @@
-## Change Log
+# Changelog
 
-### 14.2.1 (2014/09/25 20:23 +00:00)
-- [79ddd03](https://github.com/skylime/mi-core-mx/commit/79ddd03f954fdf6f2ba064e95cc45757310ce52c) Add dkim selector, it's easier to update to a newer key (@drscream)
-- [92fa49c](https://github.com/skylime/mi-core-mx/commit/92fa49cfc4aac4510c1620e956d72d7479ec5893) max connections set to 500 (@BroSys)
-- [5498519](https://github.com/skylime/mi-core-mx/commit/549851904a54e8d158f34301cd272dce93cf1f03) update to new core-base image: a6fb1ff0-4333-11e4-a0e1-370c81688134 (@drscream)
-- [474c4f0](https://github.com/skylime/mi-core-mx/commit/474c4f076468ca114998d0efaf5e8a2bbca63b6a) update version number (@drscream)
+## 14.2.2
 
-### 14.2.0 (2014/09/21 16:48 +00:00)
-- [3fe73b4](https://github.com/skylime/mi-core-mx/commit/3fe73b4e91d6b85f38c4f1b40893d731f2156ac0) Initial release (@dcrudgington)
-- [f257eb3](https://github.com/skylime/mi-core-mx/commit/f257eb37c85ba5064d7780b282408e950d3cd34d) Added LICENSE and copy directory (@dcrudgington)
-- [d631523](https://github.com/skylime/mi-core-mx/commit/d6315237ff15b5d07a9dd1cc1dc3e0e55fe84414) Added var/zoneinit/includes directory (@dcrudgington)
-- [4688a1f](https://github.com/skylime/mi-core-mx/commit/4688a1f405b65ff625a1506562a3544e1f8187f3) Removed .gitignore from copy directory (@dcrudgington)
-- [b85ec1c](https://github.com/skylime/mi-core-mx/commit/b85ec1c9ec55582f177782360cb1d350ef8dc1f5) Added new packages file (@dcrudgington)
-- [44b4e61](https://github.com/skylime/mi-core-mx/commit/44b4e61fbcb51ff98307525da592818a2e8dd335) Fixed customize (@dcrudgington)
-- [dd08bcc](https://github.com/skylime/mi-core-mx/commit/dd08bcca66779dfb8fd4c705c78de953a6b054f4) Adding Readme (@cobracmder)
-- [82da6b3](https://github.com/skylime/mi-core-mx/commit/82da6b3bcdc401835ca9fa9c5d93b4053d9093b9) Added extra space to motd (@dcrudgington)
-- [4a13be1](https://github.com/skylime/mi-core-mx/commit/4a13be16f18d7d5d430027229dae509421693807) Merge branch 'master' of github.com:joyent/mi-example (@dcrudgington)
-- [7ba00ad](https://github.com/skylime/mi-core-mx/commit/7ba00ad09715c7e8f551cbe5caa95fb025115324) Fixed verbage in packages file (@dcrudgington)
-- [dc47e7c](https://github.com/skylime/mi-core-mx/commit/dc47e7cfaeb77511f4a50b841e487aa136520538) Initial commit with basic configs for (@BroSys)
-- [48bd414](https://github.com/skylime/mi-core-mx/commit/48bd414bd8a47e64cbb531108c9f48b658b14f17) renamed exim-configs (@BroSys)
-- [bd2141a](https://github.com/skylime/mi-core-mx/commit/bd2141afd44471a5a6375f88053fd3e22c158ffb) Added basics like mdata-setup, spipe-conf etc by copying... (@BroSys)
-- [182b965](https://github.com/skylime/mi-core-mx/commit/182b965084f1bfcb740f05faaaae8ad920c6de9b) Zoneinits for clamav, rspamd and exim added. (@BroSys)
-- [909e580](https://github.com/skylime/mi-core-mx/commit/909e5803b64fb02c3c5626a38faa88ae15039348) Fixed mdata and package installation/configuration and README (@BroSys)
-- [5666752](https://github.com/skylime/mi-core-mx/commit/5666752a1ca2ad1c72a3c2b66c4290c743249516) changed domainkey handling with mdata (@BroSys)
-- [c86c66f](https://github.com/skylime/mi-core-mx/commit/c86c66f80a725c2b196e0bb31b734fc58d9d91e8) Fixed providing SSL certs via mdata (@BroSys)
-- [e7034e0](https://github.com/skylime/mi-core-mx/commit/e7034e05aa2620d4fb9efbfa5e6823632938f31a) Fixed mainfest and motd (@BroSys)
-- [03d7f32](https://github.com/skylime/mi-core-mx/commit/03d7f32e280caaa2990c7acf6824d95d24807fb1) minor changes (@BroSys)
-- [6b7d7cb](https://github.com/skylime/mi-core-mx/commit/6b7d7cb2ca4a0394135f52d4763af951c1b94cf4) Fix logging directory for clamav (@drscream)
-- [7fd24c9](https://github.com/skylime/mi-core-mx/commit/7fd24c90a7470d1ac48250e23f1de69cfd60c0c4) update clamav database by provisioning (@drscream)
-- [ffc2f8a](https://github.com/skylime/mi-core-mx/commit/ffc2f8aa0e9def182674b4b83805fa30388ced04) Use single file that contains the cert, key and CA as PEM format (@drscream)
-- [da99e04](https://github.com/skylime/mi-core-mx/commit/da99e04e40373a882adc2510eb3de37543deed57) enable mdata-setup only on provisioning state (@drscream)
-- [3c2c4f8](https://github.com/skylime/mi-core-mx/commit/3c2c4f8ab25628f4ee72efda191f78ae76f55b31) add spamassassin spamd service (@drscream)
-- [f9c635b](https://github.com/skylime/mi-core-mx/commit/f9c635bc50969533f36096e9f52bae8ee48f8aa5) remove rspamd from enable it by default (@drscream)
-- [faecf29](https://github.com/skylime/mi-core-mx/commit/faecf2917dd81985600e8cd5cf88941f11429ffe) add spamassassin pkg to be installed (@drscream)
-- [83e042d](https://github.com/skylime/mi-core-mx/commit/83e042df52a56e506a293ddc4d5748e024bbb573) disable clamd and spamd update on prov state (@drscream)
-- [6113c9b](https://github.com/skylime/mi-core-mx/commit/6113c9b0589c9c0d6ccc45fb4a839bef1a52f761) Be sure database for spamd and clamd exists (@drscream)
-- [e89b0d0](https://github.com/skylime/mi-core-mx/commit/e89b0d03ab41ccef12cdf357942db30ac6840b90) remove spamd update on customize (@drscream)
-- [d23a975](https://github.com/skylime/mi-core-mx/commit/d23a975d9afafb10d6ac00b86fb9edf1b75e1694) modify cron execute (@drscream)
-- [02f5a53](https://github.com/skylime/mi-core-mx/commit/02f5a530a5d0fd8c6f42f7d6ca4354344bc2f832) fix child manifest exec (@drscream)
-- [9a4e964](https://github.com/skylime/mi-core-mx/commit/9a4e96468e2f306555bae182d7ecee1a3dc5cc8a) Add exim manifest because it's missing in the pkgs (@drscream)
-- [1303562](https://github.com/skylime/mi-core-mx/commit/13035620cbfc29477a09bdb4df34e0f8ceab15ea) fix bash code, bitches (@drscream)
-- [994dc07](https://github.com/skylime/mi-core-mx/commit/994dc07f0c0801310066477f76df98a2cd6b9ed6) Enable freshclam as a service, close #1 (@drscream)
-- [d64ac2b](https://github.com/skylime/mi-core-mx/commit/d64ac2bd3e32c6677e22262414ad0bc593c8a564) remove rspamd pkg, add p5-DB_File for `sa-learn` (@drscream)
-- [0d14efe](https://github.com/skylime/mi-core-mx/commit/0d14efe949362c31e89beadceb948610457fe8a0) add cronjob for sa-update into root user (@drscream)
-- [d067130](https://github.com/skylime/mi-core-mx/commit/d067130ee9e80a4d4d677f2414fdfa7b67325373) remove rspamd because no longer required, close #3 (@drscream)
-- [3700b82](https://github.com/skylime/mi-core-mx/commit/3700b829c04f4cd61dd86202189f62c07c88a2b3) added pyzor for spmassassin (@BroSys)
-- [55dd8f0](https://github.com/skylime/mi-core-mx/commit/55dd8f04ddae2c0f03bc70ddc3557934fcd43ebd) Merge branch 'master' of github.com:skylime/mi-core-mx (@BroSys)
-- [ee891ee](https://github.com/skylime/mi-core-mx/commit/ee891ee2c7f0c8ec0ea86b646730ba5e7f7015c7) typo in spamassassins config (@BroSys)
-- [7669d4d](https://github.com/skylime/mi-core-mx/commit/7669d4dde65e855aa697c3e9c27e93e4c073e40e) clean up spamassassins config (@BroSys)
-- [e76a4a0](https://github.com/skylime/mi-core-mx/commit/e76a4a0f2a7ba8c8c7ed11e979969f4de7cb582d) Enable munin-node for mx server with some default and custom plugins (@drscream)
-- [c1d8942](https://github.com/skylime/mi-core-mx/commit/c1d894246a9afa6b7338d38ad5312319efbabb49) Add awesome fancy motd (@drscream)
-- [7147c6a](https://github.com/skylime/mi-core-mx/commit/7147c6af09f9241eaaf4636eb7b3cc0b74966fe3) missing munin plugin variables (@drscream)
-- [7fd36e4](https://github.com/skylime/mi-core-mx/commit/7fd36e46a4b01b03dd46c64f6599bf9082c592da) fix plugin check for different munin stuff (@drscream)
-- [057479c](https://github.com/skylime/mi-core-mx/commit/057479cca542d2688266c9aaea4dbe838f480530) use -s option for mdata enable (@drscream)
-- [15a5943](https://github.com/skylime/mi-core-mx/commit/15a59432d13cd01c28775fffd55012de49b5b5ba) move all mdata-setup for includes (@drscream)
-- [2c5ad71](https://github.com/skylime/mi-core-mx/commit/2c5ad716adcfe81f976c1a114c96f7fcc794a957) switch to munin community plugin repo and remove static file (@drscream)
-- [01e35f3](https://github.com/skylime/mi-core-mx/commit/01e35f36209aede1a2e9cee66d27e647a6306048) get pyzor std-server (@BroSys)
-- [ffca237](https://github.com/skylime/mi-core-mx/commit/ffca237ca27072581e60ea4f8d4b12c438ab3080) holy munin - fixed typo (@BroSys)
-- [1e7824f](https://github.com/skylime/mi-core-mx/commit/1e7824fef4aa631ad50597bf88dacffa6a15f833) add minimum ram requirement (@wiedi)
-- [c3f05d3](https://github.com/skylime/mi-core-mx/commit/c3f05d3d92692afc55a0bd7a2688afcd87ee66ce) update to version 14.2.0 (@drscream)
-- [805fa50](https://github.com/skylime/mi-core-mx/commit/805fa50a6e9da39d4641c1bfc44217b2752cd125) hiredis is an official pkg now (@drscream)
-- [7dbc1bd](https://github.com/skylime/mi-core-mx/commit/7dbc1bd43ebdc06cd0a6c2642e526f3bf7bcc2f8) remove freshclam on image build (@drscream)
-- [455da3d](https://github.com/skylime/mi-core-mx/commit/455da3d5b8d93a1a508bc905f4ace0fa6f3b4721) use new exim version (@drscream)
-- [5d4ec05](https://github.com/skylime/mi-core-mx/commit/5d4ec05a3d604530ce7933798edd83104401956c) update readme (@drscream)
-- [5c82183](https://github.com/skylime/mi-core-mx/commit/5c82183b768cab51cb36370e0c7f43ee0ff34d62) fix permissions and path for ssl certificate (@drscream)
-- [0521a60](https://github.com/skylime/mi-core-mx/commit/0521a605aae90e7ab61682dbca6ef9a87d93ae38) fix permissions and path for ssl certificate (@drscream)
-- [397ef10](https://github.com/skylime/mi-core-mx/commit/397ef10f8991d44955e9a77bd0a5da4dea0e5bb4) remove unused scripts (@drscream)
-- [e9c605d](https://github.com/skylime/mi-core-mx/commit/e9c605d164b4c73d313b3e6161f566fbce19cb12) update base image (@drscream)
-- [0dc145b](https://github.com/skylime/mi-core-mx/commit/0dc145beb4f7317cb867df0e954d74b8ea91b65a) add missing redis config (@drscream)
-- [d39d55b](https://github.com/skylime/mi-core-mx/commit/d39d55bc2d117671dd08bae1129aa1015ea7b584) bind on localhost (@drscream)
-- [876c414](https://github.com/skylime/mi-core-mx/commit/876c4146145ee24ca926a9d61a080b8bdb69454a) Use SMF for exim from pkgsrc (@drscream)
-- [1ce7d6c](https://github.com/skylime/mi-core-mx/commit/1ce7d6c735c2506b8bb9d8b1c00f941459617587) create spamd home folder (@drscream)
-- [163fd5b](https://github.com/skylime/mi-core-mx/commit/163fd5b59fc04b5d238a226158a3f548e97f2049) rename domainkey to dkim_private_key (@drscream)
-- [9727609](https://github.com/skylime/mi-core-mx/commit/9727609fee3278a73952dc9ab0060f60e405baca) get hostname from mdata (@BroSys)
-- [bacaf12](https://github.com/skylime/mi-core-mx/commit/bacaf122a300dd314142c993c80cc9c6c81aeccf) fixed condition for return-path rewrite (@BroSys)
-- [618c51f](https://github.com/skylime/mi-core-mx/commit/618c51f428031be418893baad26d5cdcacb88d9c) changed mailrouting for lmtp and typos (@BroSys)
-- [370ab42](https://github.com/skylime/mi-core-mx/commit/370ab42621460cda5dc3adadd4da36b19e25d494) fixed return path rewrite wildcard and tagged aliases (@BroSys)
-- [fde4869](https://github.com/skylime/mi-core-mx/commit/fde48690c2a34bc945beb6c5c2670170895be623) be sure the license is correct for skylime (@drscream)
-- [e106f70](https://github.com/skylime/mi-core-mx/commit/e106f70380a116a63ff2dd7001d45b7dda885fb6) TLS advertised on port 25 (@BroSys)
-- [914971a](https://github.com/skylime/mi-core-mx/commit/914971a2a19db7b3e97d671981e91aaec0bbf109) report_safe to 0 for X-Spam header and no bodymod (@BroSys)
-- [657409d](https://github.com/skylime/mi-core-mx/commit/657409d8337cfbe10a176fa53ae75f2d82b2218b) fixed typo in mailrouting (transport int_smtp not found) (@BroSys)
-- [0fec8a9](https://github.com/skylime/mi-core-mx/commit/0fec8a9ca3971e3e2a75a6a4f69d8a63dd0d083f) Add rblwatch/rblcheck script as pip pkg and create cronjob (@drscream)
-- [9016a3c](https://github.com/skylime/mi-core-mx/commit/9016a3cc9a16d85dc44639084411b7b94e3d5486) dont use port 25 on tls_on_connect_ports (@drscream)
-- [20dc23b](https://github.com/skylime/mi-core-mx/commit/20dc23be1e068221518fd8c3013e0cd41a14b28f) remove authentication on MX server (@drscream)
-- [ff3133a](https://github.com/skylime/mi-core-mx/commit/ff3133ad6898f8f83af3b9266ce41de6c5769356) add munin configuration back to customize script (@drscream)
-- [149cbac](https://github.com/skylime/mi-core-mx/commit/149cbacce0ef6d21cb93f7cf4d88aec191761bfb) update base image (@drscream)
-- [d0e9ca1](https://github.com/skylime/mi-core-mx/commit/d0e9ca1c112c53e86340fbcf669b8a4f719b89fc) ACLs prepared for rfc2142 localparts (@BroSys)
-- [801c946](https://github.com/skylime/mi-core-mx/commit/801c946048ad6082853232c9bad9522567b6ef52) Added router for rfc2142 localparts (@BroSys)
-- [4b9eca9](https://github.com/skylime/mi-core-mx/commit/4b9eca991389953090a812c620b204a62e70b67e) mdata tuned for administrativ emailaddress (@BroSys)
-- [cfa5e80](https://github.com/skylime/mi-core-mx/commit/cfa5e80377e5750e40d46abe104c7f96d387e24a) improved mdata for exim (@BroSys)
-- [4a3372e](https://github.com/skylime/mi-core-mx/commit/4a3372efed9e54b1f56897259e7053a100c01576) Be valid with all mail_adminaddr variable in other mi images (@drscream)
-- [7d3a240](https://github.com/skylime/mi-core-mx/commit/7d3a2401450091c8b713b2ddfbaad132b60cc2a1) Create exim symlinks for mailq and sendmail (@drscream)
-- [5af467a](https://github.com/skylime/mi-core-mx/commit/5af467ac2a35c771c6ab9f4afa159b59f2006507) add exim munin configuration (@drscream)
-- [1a7bb3f](https://github.com/skylime/mi-core-mx/commit/1a7bb3f0dc450af7a9a7a38ddea0666f78b0e64b) update to new core-base image: 86465fe4-312d-11e4-a145-57554f40fa40 (@drscream)
-- [d01850e](https://github.com/skylime/mi-core-mx/commit/d01850e0a2a4d5f15f3c216aa8cbd144fadde4f8) Merge branch 'master' of github.com:skylime/mi-core-mx (@BroSys)
-- [d4163a7](https://github.com/skylime/mi-core-mx/commit/d4163a76d95e97a8a6d9224ad10e2cc63c288030) administrativ contact changed from list to symbol (@BroSys)
-- [28ec019](https://github.com/skylime/mi-core-mx/commit/28ec0190fe6220e1e9ced2cc25201afdd8b9bf12) rfc2142 localparts interpreted with ans without domains (@BroSys)
-- [63c784e](https://github.com/skylime/mi-core-mx/commit/63c784e6cd439eee0b018b5a32cd38a3513a736e) Spam-Report-Header only if level more than 5.0 (@BroSys)
-- [16e140b](https://github.com/skylime/mi-core-mx/commit/16e140bdf2455e8442088eb1bd509c729ecd0fc6) fixed routing for alias to internal mail accounts (@BroSys)
-- [e62a8aa](https://github.com/skylime/mi-core-mx/commit/e62a8aadb584d783a945bb0450e17c8568c0ae37) sligly imrpovement to the commit before - aliasrouting (@BroSys)
-- [46da59c](https://github.com/skylime/mi-core-mx/commit/46da59c71fafafdb76d53895301918c67754f2f2) Exim version update including redis fix from https://github.com/wiedi/exim/commit/972af88e604546ee2ab1f817b8a098056065dd78 (@drscream)
-- [fe94a82](https://github.com/skylime/mi-core-mx/commit/fe94a82223583991a620404339b4c5ce622be44d) typo in exim config (@BroSys)
-- [8601d80](https://github.com/skylime/mi-core-mx/commit/8601d8066ee604d0496dcd7ae3d3e6e98bb1e232) Merge branch 'master' of github.com:skylime/mi-core-mx (@BroSys)
-- [083b8b1](https://github.com/skylime/mi-core-mx/commit/083b8b1b6c8c6766d05281f3e2e284352f58bd1e) catchall alias is no more greedy (@BroSys)
-- [911a466](https://github.com/skylime/mi-core-mx/commit/911a466e93a1615ebb24bc04a54aa01a3ec9ae3d) update to new core-base image: fbd244a6-32bf-11e4-8629-73c3e6ed202d (@drscream)
-- [f416367](https://github.com/skylime/mi-core-mx/commit/f416367474f1e01a09cf6011643cc9ead8525735) routing to mailbox AND alias (@BroSys)
-- [542c100](https://github.com/skylime/mi-core-mx/commit/542c100626ec03fa87010723c5bb1f75db745694) Merge branch 'master' of github.com:skylime/mi-core-mx (@BroSys)
-- [5865524](https://github.com/skylime/mi-core-mx/commit/5865524d00d6e2319302df39628073e3dc1e88cc) tiny routing issue fixed (@BroSys)
-- [4987491](https://github.com/skylime/mi-core-mx/commit/49874919c8e291baac29e39240ee008ff4585be8) update to new core-base image: 5f749f3c-335f-11e4-a952-e780d226fa57 (@drscream)
-- [892501d](https://github.com/skylime/mi-core-mx/commit/892501d81cb4e4c07748a85e7af5af365108b6c9) update to new core-base image: aed27f7a-34c4-11e4-be6c-4392ae5601bc (@drscream)
-- [b120d74](https://github.com/skylime/mi-core-mx/commit/b120d74a3fdcdfbd54a594bd94502eb261b0439f) update to new core-base image: 89402478-34cf-11e4-ac94-f3a4d047918f (@drscream)
-- [05739bb](https://github.com/skylime/mi-core-mx/commit/05739bbae5328dd021284c7954697adfa768657c) be sure we have a valid bayes db also if we dont use it (@drscream)
-- [77369b4](https://github.com/skylime/mi-core-mx/commit/77369b40c867ec13c55ec356a8f62a1330788752) remove [] for spide configuration to also allow hostnames (@drscream)
-- [644272a](https://github.com/skylime/mi-core-mx/commit/644272a9899b02fc1ad55c0dd53ad9ed63ab1182) update readme file (@drscream)
-- [518ffb2](https://github.com/skylime/mi-core-mx/commit/518ffb222d790922b2e7564209f6c43fa82b3792) update to new core-base image: 99c9e7ac-34ed-11e4-bdc4-236f63b1ea9d (@drscream)
-- [d29e2e2](https://github.com/skylime/mi-core-mx/commit/d29e2e2bf6bba0d39518d79007d345cc1b210e79) update to new core-base image: 6babbf24-3765-11e4-a87a-23e846a65e81 (@drscream)
-- [c6d751b](https://github.com/skylime/mi-core-mx/commit/c6d751b042caa57fa1cf2c4c450c004a1e8c8f00) cleanup configuration file to use tabs (@drscream)
-- [0ac50ae](https://github.com/skylime/mi-core-mx/commit/0ac50ae1c54628c3dee9ed3c9bc769de385a94dd) cleanup configuration file to use tabs (@drscream)
-- [537b381](https://github.com/skylime/mi-core-mx/commit/537b3819ea8f14c3a4fe33a3151c7564b9d07e5a) fix readme and license file (@drscream)
-- [eb188d0](https://github.com/skylime/mi-core-mx/commit/eb188d0e76413eb17549aa827c061a13695a6486) add changelog (@drscream)
+### New
+
+* update to new core-base image 43aaede4-4622-11e4-a839-d3704910e498. [Thomas Merkel]
+
+## 14.2.1 (2014-09-25)
+
+### Other
+
+* update changelog. [Thomas Merkel]
+* update version number. [Thomas Merkel]
+* update to new core-base image: a6fb1ff0-4333-11e4-a0e1-370c81688134. [Thomas Merkel]
+* max connections set to 500. [Boris Poblotzki]
+* Add dkim selector, it's easier to update to a newer key. [Thomas Merkel]
+
+## 14.2.0 (2014-09-21)
+
+### Other
+
+* add changelog. [Thomas Merkel]
+* fix readme and license file. [Thomas Merkel]
+* cleanup configuration file to use tabs. [Thomas Merkel]
+* cleanup configuration file to use tabs. [Thomas Merkel]
+* update to new core-base image: 6babbf24-3765-11e4-a87a-23e846a65e81. [Thomas Merkel]
+* update to new core-base image: 99c9e7ac-34ed-11e4-bdc4-236f63b1ea9d. [Thomas Merkel]
+* update readme file. [Thomas Merkel]
+* remove [] for spide configuration to also allow hostnames. [Thomas Merkel]
+* be sure we have a valid bayes db also if we dont use it. [Thomas Merkel]
+* update to new core-base image: 89402478-34cf-11e4-ac94-f3a4d047918f. [Thomas Merkel]
+* update to new core-base image: aed27f7a-34c4-11e4-be6c-4392ae5601bc. [Thomas Merkel]
+* update to new core-base image: 5f749f3c-335f-11e4-a952-e780d226fa57. [Thomas Merkel]
+* tiny routing issue fixed. [Boris Poblotzki]
+* Merge branch 'master' of github.com:skylime/mi-core-mx. [Boris Poblotzki]
+* routing to mailbox AND alias. [Boris Poblotzki]
+* catchall alias is no more greedy. [Boris Poblotzki]
+* Merge branch 'master' of github.com:skylime/mi-core-mx. [Boris Poblotzki]
+* typo in exim config. [Boris Poblotzki]
+* sligly imrpovement to the commit before - aliasrouting. [Boris Poblotzki]
+* fixed routing for alias to internal mail accounts. [Boris Poblotzki]
+* Spam-Report-Header only if level more than 5.0. [Boris Poblotzki]
+* rfc2142 localparts interpreted with ans without domains. [Boris Poblotzki]
+* administrativ contact changed from list to symbol. [Boris Poblotzki]
+* Merge branch 'master' of github.com:skylime/mi-core-mx. [Boris Poblotzki]
+
+    Conflicts:         copy/opt/core/var/mdata-setup/includes/31-exim.sh
+
+* improved mdata for exim. [Boris Poblotzki]
+* mdata tuned for administrativ emailaddress. [Boris Poblotzki]
+* Added router for rfc2142 localparts. [Boris Poblotzki]
+* ACLs prepared for rfc2142 localparts. [Boris Poblotzki]
+* update base image. [Thomas Merkel]
+* add munin configuration back to customize script. [Thomas Merkel]
+* remove authentication on MX server. [Thomas Merkel]
+* dont use port 25 on tls_on_connect_ports. [Thomas Merkel]
+* Add rblwatch/rblcheck script as pip pkg and create cronjob. [Thomas Merkel]
+* fixed typo in mailrouting (transport int_smtp not found) [Boris Poblotzki]
+* report_safe to 0 for X-Spam header and no bodymod. [Boris Poblotzki]
+* TLS advertised on port 25. [Boris Poblotzki]
+* be sure the license is correct for skylime. [Thomas Merkel]
+* fixed return path rewrite wildcard and tagged aliases. [Boris Poblotzki]
+* changed mailrouting for lmtp and typos. [Boris Poblotzki]
+* fixed condition for return-path rewrite. [Boris Poblotzki]
+* get hostname from mdata. [Boris Poblotzki]
+* rename domainkey to dkim_private_key. [Thomas Merkel]
+* create spamd home folder. [Thomas Merkel]
+* Use SMF for exim from pkgsrc. [Thomas Merkel]
+* bind on localhost. [Thomas Merkel]
+* add missing redis config. [Thomas Merkel]
+* update base image. [Thomas Merkel]
+* remove unused scripts. [Thomas Merkel]
+* fix permissions and path for ssl certificate. [Thomas Merkel]
+* fix permissions and path for ssl certificate. [Thomas Merkel]
+* update readme. [Thomas Merkel]
+* use new exim version. [Thomas Merkel]
+* remove freshclam on image build. [Thomas Merkel]
+* hiredis is an official pkg now. [Thomas Merkel]
+* update to version 14.2.0. [Thomas Merkel]
+
+    * use base image * remove data that is already in base image * cleanup
+    temp changelog
+
+* add minimum ram requirement. [Sebastian Wiedenroth]
+* holy munin - fixed typo. [BroSys]
+* get pyzor std-server. [Boris Poblotzki]
+* switch to munin community plugin repo and remove static file. [Thomas Merkel]
+* move all mdata-setup for includes. [Thomas Merkel]
+* use -s option for mdata enable. [Thomas Merkel]
+* fix plugin check for different munin stuff. [Thomas Merkel]
+* missing munin plugin variables. [Thomas Merkel]
+* Add awesome fancy motd. [Thomas Merkel]
+* Enable munin-node for mx server with some default and custom plugins. [Thomas Merkel]
+* clean up spamassassins config. [Boris Poblotzki]
+* typo in spamassassins config. [Boris Poblotzki]
+* Merge branch 'master' of github.com:skylime/mi-core-mx. [Boris Poblotzki]
+
+    Conflicts:         packages
+
+* added pyzor for spmassassin. [Boris Poblotzki]
+* fix bash code, bitches. [Thomas Merkel]
+* Add exim manifest because it's missing in the pkgs. [Thomas Merkel]
+* fix child manifest exec. [Thomas Merkel]
+* modify cron execute. [Thomas Merkel]
+* remove spamd update on customize. [Thomas Merkel]
+* Be sure database for spamd and clamd exists. [Thomas Merkel]
+* disable clamd and spamd update on prov state. [Thomas Merkel]
+* add spamassassin pkg to be installed. [Thomas Merkel]
+* remove rspamd from enable it by default. [Thomas Merkel]
+* add spamassassin spamd service. [Thomas Merkel]
+
+    * add custom spamd manifest script * create extra user for spamd *
+    create cron job that run sa-update every day
+
+* enable mdata-setup only on provisioning state. [Thomas Merkel]
+* Use single file that contains the cert, key and CA as PEM format. [Thomas Merkel]
+
+    * it's easier to handle one single file which contains all ssl
+    information * create ssl in the exim folder
+
+* update clamav database by provisioning. [Thomas Merkel]
+
+    * the clamav database is required to run clamd * run command once
+    during provisioning * TODO: cronjob is required to update the database
+    sometimes
+
+* Fix logging directory for clamav. [Thomas Merkel]
+
+    * use /var/log/clamav for logging * add directory and setup
+    permissions * change configuration file from clamd.conf
+
+* minor changes. [Boris Poblotzki]
+* Fixed mainfest and motd. [Boris Poblotzki]
+* Fixed providing SSL certs via mdata. [Boris Poblotzki]
+* changed domainkey handling with mdata. [Boris Poblotzki]
+* Fixed mdata and package installation/configuration and README. [Boris Poblotzki]
+* Zoneinits for clamav, rspamd and exim added. [Boris Poblotzki]
+* Added basics like mdata-setup, spipe-conf etc by copying... [Boris Poblotzki]
+* renamed exim-configs minor changes for SRS-vars. [Boris Poblotzki]
+* Initial commit with basic configs for exim, rspamd and clamav. [Boris Poblotzki]
+* Fixed verbage in packages file. [Derek Crudgington]
+* Merge branch 'master' of github.com:joyent/mi-example. [Derek Crudgington]
+* Added extra space to motd. [Derek Crudgington]
+* Fixed customize. [Derek Crudgington]
+* Added new packages file. [Derek Crudgington]
+* Removed .gitignore from copy directory. [Derek Crudgington]
+* Added var/zoneinit/includes directory. [Derek Crudgington]
+* Added LICENSE and copy directory. [Derek Crudgington]
+* Initial release. [Derek Crudgington]
+
