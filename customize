@@ -12,6 +12,7 @@ MUNIN_PLUGINS=(
 	'exim_mailqueue'
 	'exim_mailstats'
 	'spamassassin'
+	'redis_replication_status'
 )
 
 # Exit if any commands fail
