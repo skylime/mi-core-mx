@@ -1,6 +1,12 @@
 # Changelog
 
-## 14.2.2
+## 14.2.3
+
+### New
+
+* update to new core-base image 4771851c-473c-11e4-a5d7-2336565b77d9. [Thomas Merkel]
+
+## 14.2.2 (2014-09-27)
 
 ### New
 
