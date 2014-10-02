@@ -68,6 +68,11 @@ tls_advertise_hosts = *
 tls_certificate     = /opt/local/etc/exim/ssl/exim.pem
 tls_privatekey      = /opt/local/etc/exim/ssl/exim.pem
 
+#>> Logging
+#>> Syslog and extra exim log files
+log_file_path      = :syslog
+syslog_duplication = false
+
 
 #>>
 #>> ACL
