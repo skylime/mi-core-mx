@@ -1,6 +1,17 @@
 # Changelog
 
-## 14.2.4
+## 14.2.5
+
+### New
+
+* version update. [Thomas Merkel]
+
+### Fix
+
+* change tmpdir for spamd to use disk and not memory. [Thomas Merkel]
+* change clamd temp directory to /var/tmp to dont use memory for that. [Thomas Merkel]
+
+## 14.2.4 (2014-10-02)
 
 ### New
 
@@ -8,6 +19,11 @@
 * create cronjob for exim verify script. [Thomas Merkel]
 * exim cron script to check panic log and verify database. [Thomas Merkel]
 * use also syslog for logging. [Thomas Merkel]
+
+## 14.2.3 (2014-09-28)
+
+### New
+
 * update to new core-base image 4771851c-473c-11e4-a5d7-2336565b77d9. [Thomas Merkel]
 * new munin plugin redis_replication_status. [Thomas Merkel]
 
