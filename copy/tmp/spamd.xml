@@ -18,6 +18,7 @@
       <method_credential user='root' group='root'/>
       <method_environment>
         <envvar name='PATH' value='/opt/local/bin:/opt/local/sbin:/usr/bin:/usr/sbin'/>
+        <envvar name='TMPDIR' value='/var/tmp'/>
       </method_environment>
     </method_context>
     </exec_method>
@@ -26,6 +27,7 @@
       <method_credential user='spamd' group='spamd'/>
       <method_environment>
         <envvar name='PATH' value='/opt/local/bin:/opt/local/sbin:/usr/bin:/usr/sbin'/>
+        <envvar name='TMPDIR' value='/var/tmp'/>
       </method_environment>
     </method_context>
     </exec_method>
