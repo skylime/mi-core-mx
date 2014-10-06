@@ -22,10 +22,13 @@ MAILBOX_SRV_PORT = 24
 
 .include LOCALCONF
 
+# set primary hostname from macro
+primary_hostname = PRIMARY_HOSTNAME
+
 # security reasons
 smtp_accept_max = 500
 
-domainlist local_domains = $primary_hostname : localhost
+domainlist local_domains = PRIMARY_HOSTNAME : localhost
 
 # special handling for rfc 2142 usernames and for root
 localpartlist rfc2142_localparts = postmaster :  abuse : noc : security : root
@@ -274,7 +277,7 @@ begin routers
 		                   } }
 		data            = ADMIN_CONTACT
 		redirect_router = intmailserver
-	#>> dnslookup - for all mails to external recipients - if it's not in thedatabase
+	#>> dnslookup - for all mails to external recipients - if it's not in the database
 	lookuphost:
 		driver              = dnslookup
 		transport           = remote_smtp
