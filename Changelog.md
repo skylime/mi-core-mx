@@ -1,6 +1,17 @@
 # Changelog
 
-## 14.2.5
+## 14.2.6
+
+### New
+
+* update to new core-base image cd298780-4d55-11e4-addf-63835732c9d9. [Thomas Merkel]
+* configure logadm. [Thomas Merkel]
+
+### Other
+
+* fix for administrativ mails. [Boris Poblotzki]
+
+## 14.2.5 (2014-10-03)
 
 ### New
 
