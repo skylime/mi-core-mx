@@ -5,5 +5,8 @@ CRON='0 10 * * * sudo -u spamd /opt/local/bin/sa-update && kill -SIGHUP $(cat /v
 # Run sa-learn sync to have valid bayes database
 sudo -u spamd sa-learn --sync
 
+# Run pyzor discover
+sudo -u spamd pyzor --homedir /opt/local/etc/spamassassin discover
+
 # enable spamd service
 /usr/sbin/svcadm enable svc:/network/spamd
