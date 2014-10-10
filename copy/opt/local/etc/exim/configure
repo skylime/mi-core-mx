@@ -175,9 +175,16 @@ begin acl
 	acl_check_data:
 		#>> the clamav job 
 		deny
-			message = This message contains malware ($malware_name)
-			demime  = *
-			malware = *
+			message   = This message contains malware ($malware_name)
+			condition = ${if < {$message_size}{25M}}
+			demime    = *
+			malware   = *
+		#>> skip spam scanning for large msg
+		accept
+			condition       = ${if >{$message_size}{5M}}
+			log_message     = Spam scan skipped; message too large ($message_size)
+			add_header      = X-Spam-Report: Spam scan skipped; message too large
+			set acl_m_large = yes
 		#>> put headers in all messages (no matter if spam or not)
 		warn
 			spam       = nobody:true
