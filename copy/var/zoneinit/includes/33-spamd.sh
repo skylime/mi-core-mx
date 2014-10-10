@@ -6,7 +6,8 @@ CRON='0 10 * * * sudo -u spamd /opt/local/bin/sa-update && kill -SIGHUP $(cat /v
 sudo -u spamd sa-learn --sync
 
 # Run pyzor discover
-sudo -u spamd pyzor --homedir /opt/local/etc/spamassassin discover
+sudo -u spamd pyzor --homedir /opt/local/etc/spamassassin ping || \
+	sudo -u spamd pyzor --homedir /opt/local/etc/spamassassin discover
 
 # enable spamd service
 /usr/sbin/svcadm enable svc:/network/spamd
