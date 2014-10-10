@@ -1,6 +1,31 @@
 # Changelog
 
-## 14.2.6
+## 14.2.7
+
+### New
+
+* update to new core-base image ffefd524-4e1e-11e4-9998-bf5009186c28. [Thomas Merkel]
+
+### Fix
+
+* set correct bayes path. [Thomas Merkel]
+* dkim support for spamd which requires p5-Mail-DKIM. [Thomas Merkel]
+* be sure we have gdbm for python installed for pyzor. [Thomas Merkel]
+* be sure we run pyzor discover first. [Thomas Merkel]
+* logadm do not warn for empty or non existing files. [Thomas Merkel]
+
+### Other
+
+* be sure the home dir is set correctly for spamd. [Thomas Merkel]
+* Don't scan emails for spam that are &gt;5 MB, also don't scan emails for virus &gt;25 MB. [Thomas Merkel]
+* Modify condition for HELO first check. [Thomas Merkel]
+* Remove &quot;failed in HELO/EHLO - Connection denied after HELO&quot; and replace it with a local warning msg in the logfile. [Thomas Merkel]
+
+    Most mailservers didn't provide correct DNS and HELO information, so
+    we need to disable it.
+
+
+## 14.2.6 (2014-10-06)
 
 ### New
 
