@@ -93,9 +93,8 @@ begin acl
 			message       = Sorry: $sender_host_address failed in Reverse DNS Lookup (get serious!)
 			log_message   = $sender_host_address failed in Reverse DNS Lookup - Connection denied after HELO
 			!verify       = reverse_host_lookup
-		deny
-			message       = Sorry: HELO not suitable (has to match hostname)
-			log_message   = $sender_host_address failed in HELO/EHLO - Connection denied after HELO
+		warn
+			log_message   = $sender_host_address failed in HELO/EHLO
 			!verify       = helo
 		#>> DNSBLs
 		#>> deny if listed at spamhaus
