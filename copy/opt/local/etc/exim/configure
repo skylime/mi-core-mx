@@ -109,7 +109,7 @@ begin acl
 		deny
 			message       = HELO first please
 			log_message   = $sender_host_address failed - HELO/EHLO missing
-			!verify       = helo
+			condition     = ${if eq{$sender_helo_name}{}}
 		#>> deny strange characters
 		deny
 			message       = Restricted characters in address
