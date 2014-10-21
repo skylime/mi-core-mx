@@ -179,9 +179,9 @@ begin acl
 			condition = ${if < {$message_size}{25M}}
 			demime    = *
 			malware   = *
-		#>> skip spam scanning for large msg
+		#>> skip spam scanning for large msg (larger 1M)
 		accept
-			condition       = ${if >{$message_size}{5M}}
+			condition       = ${if >{$message_size}{1M}}
 			log_message     = Spam scan skipped; message too large ($message_size)
 			add_header      = X-Spam-Report: Spam scan skipped; message too large
 			set acl_m_large = yes
