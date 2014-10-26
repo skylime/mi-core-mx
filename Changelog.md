@@ -1,5 +1,22 @@
 # Changelog
 
+## 14.2.8
+
+### New
+
+* version bump and base image update. [Thomas Merkel]
+
+### Other
+
+* set message size for being spamscanned to 1M. [Boris Poblotzki]
+* update exim to exim-4.84. [Sebastian Wiedenroth]
+
+    includes fix for redis logic and backported smf fix in http://mail-
+    index.netbsd.org/pkgsrc-changes/2014/10/20/msg112802.html so exim does
+    queue runs
+
+* run pyzor discover only if something went wrong. [Thomas Merkel]
+
 ## 14.2.7
 
 ### New
