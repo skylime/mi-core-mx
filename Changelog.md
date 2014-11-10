@@ -1,5 +1,12 @@
 # Changelog
 
+## 14.2.9
+
+### Other
+
+* added configuration for spamc for scanning at exims routingtime. [Boris Poblotzki]
+* added spam check at routing time. [Boris Poblotzki]
+
 ## 14.2.8
 
 ### New
