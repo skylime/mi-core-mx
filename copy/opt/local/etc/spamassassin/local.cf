@@ -6,3 +6,5 @@ pyzor_options --homedir /opt/local/etc/spamassassin
 # bayes directory
 bayes_path /var/spamassassin/.spamassassin/bayes
 bayes_file_mode 0777
+# additional Header for Score - used in exim routing
+add_header spam Score _SCORE_
