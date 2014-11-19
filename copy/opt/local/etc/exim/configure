@@ -270,7 +270,7 @@ begin routers
 		errors_to       = ${quote_local_part:SRS0+${length_SRS_HASH_LENGTH:${hmac{sha1}{SRS_SECRET}{${lc:$address_data}}}}+\
 		                   ${lc:$address_data}}@\
 		                   ${domain}
-		data            = ${lookup redis{HGET ALIASPREFIX${quote_local_part:$local_part}@${domain} to}{$value}fail}
+		data            = ${lookup redis{HGET ALIASPREFIX${lc:$local_part}@${domain} to}{$value}fail}
 		redirect_router = intmailserver
 	#>> filter allready delivered Mails 
 	allreadydelivered:
@@ -341,7 +341,7 @@ begin transports
                 driver                          = pipe
                 use_bsmtp                       = true
                 transport_filter        = /opt/local/bin/spamc -F /opt/local/etc/spamassassin/spamc.conf
-                command                         = /opt/local/sbin/exim -C /opt/local/etc/exim/configure -oMr spam-scanned -bS -d+all -v
+                command                         = /opt/local/sbin/exim -C /opt/local/etc/exim/configure -oMr spam-scanned -bS
                 home_directory          = "/tmp"
                 current_directory       = "/tmp"
                 message_prefix          =
