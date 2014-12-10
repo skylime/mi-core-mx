@@ -1,5 +1,12 @@
 # Changelog
 
+## 14.2.10
+
+### Other
+
+* version bump. [Thomas Merkel]
+* case insensitiv in alias-lookups. [Boris Poblotzki]
+
 ## 14.2.9
 
 ### Other
