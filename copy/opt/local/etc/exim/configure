@@ -262,7 +262,7 @@ begin routers
 		# Don't rewrite if it's a bounce, or from one of our own addresses.
 		senders = ! : ! ${lookup redis{EXISTS ACCOUNTPREFIX${local_part}@${domain}}}
 		# Rewrite only if Entry in Alias-DB
-		headers_add = "X-SRS-Rewrite: SMTP reverse-path rewritten from <$sender_address> by $primary_hostname\n\tSee SRS_URL"
+		headers_add = X-SRS-Rewrite: SMTP reverse-path rewritten from <$sender_address> by $primary_hostname\n\tSee SRS_URL
 		# Encode sender address, hash and timestamp according to http://www.anarres.org/projects/srs/
 		# We try to keep the generated localpart small. We add our own tracking info to the domain part.
 		address_data    = ${eval:($tod_epoch/86400)-13370}+\
@@ -285,7 +285,7 @@ begin routers
 		# Don't rewrite if it's a bounce, or from one of our own addresses.
 		senders         = ! : ! ${lookup redis{EXISTS ACCOUNTPREFIX${local_part}@${domain}}}
 		# Rewrite only if Entry in Alias-DB
-		headers_add     = "X-SRS-Rewrite: SMTP reverse-path rewritten from <$sender_address> by $primary_hostname\n\tSee SRS_URL"
+		headers_add     = X-SRS-Rewrite: SMTP reverse-path rewritten from <$sender_address> by $primary_hostname\n\tSee SRS_URL
 		# Encode sender address, hash and timestamp according to http://www.anarres.org/projects/srs/
 		# We try to keep the generated localpart small. We add our own tracking info to the domain part.
 		address_data    = ${eval:($tod_epoch/86400)-13370}+\
