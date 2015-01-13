@@ -1,0 +1,8 @@
+## This file may be overwritten in case external scan-hosts are used
+## will be overwritten by /opt/core/var/mdata-setup/includes/20-scan-spiped.sh
+
+#>> AV Scanner - we use ClamAV at localhost port 3310
+av_scanner = clamd:127.0.0.1 3310
+
+#>> SpamScanner - we use rspamd in a spamassassins mannor
+spamd_address = 127.0.0.1 11333

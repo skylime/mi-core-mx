@@ -3,6 +3,7 @@
 # vim: noai:ts=4:sw=4
 
 LOCALCONF = /opt/local/etc/exim/configure.local
+SCANCONF  = /opt/local/etc/exim/configure.scanner
 MAILSTORE = /tmp
 
 # Prefix for Mail- and Alias-Lookup
@@ -24,6 +25,7 @@ MAILBOX_SRV_PORT = 24
 DISABLEACLCHECK = 0
 
 .include LOCALCONF
+.include SCANCONF
 
 # set primary hostname from macro
 primary_hostname = PRIMARY_HOSTNAME
@@ -37,12 +39,6 @@ domainlist local_domains = PRIMARY_HOSTNAME : localhost
 localpartlist rfc2142_localparts = postmaster :  abuse : noc : security : root
 
 redis_servers = 127.0.0.1//
-
-#>> AV Scanner - we use ClamAV at localhost port 3310
-av_scanner = clamd:127.0.0.1 3310
-
-#>> SmapScanner - we use rspamd in a spamassassins mannor
-spamd_address = 127.0.0.1 11333
 
 #>> submission from a local MUA or script 
 #>> messages from these hosts will get fixups
