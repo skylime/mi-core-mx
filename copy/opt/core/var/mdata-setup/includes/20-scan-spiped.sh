@@ -6,20 +6,23 @@ SPREF='scan-'
 # FMRI for spiped
 SFMRI='svc:/pkgsrc/spiped'
 
-SCANFMRI="${SFMRI}${SPREF}*"
+SCANFMRI="${SFMRI}:${SPREF}*"
 STARTPORT=42000
 
 # Exims scanner config
-EXIMSC='/local/etc/exim/configure.scanner'
+EXIMSC='/opt/local/etc/exim/configure.scanner'
 
 # read scan hosts from mdata
-SCANHOST=$(mdata-get scan-host)
+SCANHOST="$(mdata-get scan-host 2>/dev/null)"
 
 ## remove all scan spipes
-for SCANPIPE in $(/usr/bin/svcs -H -o FMRI $SCANFMRI)
+for SCANPIPE in "$(/usr/bin/svcs -H -o FMRI $SCANFMRI 2>/dev/null)"
 do
-  /usr/sbin/svcadm disable $SCANPIPE
-  /usr/sbin/svccfg delete -f $SCANPIPE
+  if [ -n "$SCANPIPE" ]
+  then
+    /usr/sbin/svcadm disable $SCANPIPE
+    /usr/sbin/svccfg delete -f $SCANPIPE
+  fi
 done
 
 ## Scan Hosts in mdata?
@@ -27,7 +30,7 @@ if [ -z "$SCANHOST" ]
 then 
   ## No
   ## create exim config for local scanner
-  ln -s "${EXIMSC}.local" $EXIMSC
+  ln -s "${EXIMSC}.local" ${EXIMSC}
   ## start local scanner
   /usr/sbin/svcadm enable svc:/pkgsrc/clamav:clamd
   /usr/sbin/svcadm enable svc:/network/spamd:default
