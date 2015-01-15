@@ -21,7 +21,9 @@ This image is part of the following images:
 - `mbox_lmtp_addr` [*]: ip or hostname of lmtp server, ip addresses requires squared brackets
 - `mbox_lmtp_key` [*]: base64 encoded spipe key for lmtp server
 - `mx_ssl` [*]: ssl cert, key and CA for smtp in pem format
-- `scan_host` : ip or hostname of scan host, ip addresses requires squared brackets - optional, if not given, local scanner will be used
+- `scan_host` : IPv4 of scan host, IPs seperated by spaces
+   optional, if not given, local scanner will be used
+   no IPv6 available at the moment
 - `scan_key` : base64 encoded spipe key for scan hosts (one key only - same for all!) - required only if 'scan_host' is given
 
 - `dkim_selector`: DKIM selector (default is dkim)
