@@ -51,7 +51,7 @@ else
         let STARTPORT=STARTPORT+1
       done
       ## create spipe smf with $STARTPORT
-      /opt/core/bin/spiped-configure-smf ${SPREF}${STARTPORT} encrypt [127.0.0.1]:${STARTPORT} [${SPHOST}]:${SPPORT} $(mdata-get scan_key)
+      /opt/core/bin/spiped-configure-smf ${SPREF}${STARTPORT} encrypt [127.0.0.1]:${STARTPORT} ${SPHOST}:${SPPORT} $(mdata-get scan_key)
       ## save it to create exim config later
       case $SPPORT in
       53310)
