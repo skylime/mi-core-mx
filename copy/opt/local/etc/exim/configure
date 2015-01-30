@@ -140,12 +140,14 @@ begin acl
 			              {bool{${lookup redis{EXISTS ACCOUNTPREFIX${local_part}@${domain}}}}} \
 			              {bool{${lookup redis{EXISTS ALIASPREFIX*@${domain}}}}} \
 			             } }
-		#>> relay also mails tagged with + in address
+		#>> relay also mails with + in address (subaddress)
 		accept
 			message   = accepted (origin found)
 			# localpart+tag@domainnaame.tld
-			condition = ${if match{$local_part}{\N^([^+]+)\+([^+]+)\N} \
-			             {${lookup redis{EXISTS ACCOUNTPREFIX${lc:$1}@${domain}}}}}
+                        condition = ${if and {{match{$local_part}{\N^([^+]+)\+([^+]+)\N}} \
+                                              {bool{${lookup redis{EXISTS ACCOUNTPREFIX${lc:$1}@${domain}}}} } \
+                                              {bool{${lookup redis{HGET ACCOUNTPREFIX${lc:$1}@${domain} subaddress_extension }}}}}}
+
 		#>> we don't want them - but we take them - rfc2142 conform recipients
 		accept
 			message   = accepted (origin found.)
@@ -223,6 +225,7 @@ begin routers
 		data = ${if match{$local_part}{\N^([^+]+)\+([^+]+)\N} \
 		         {${quote_local_part:$1}@$domain}\
 		        }
+		headers_add = X-Detail: ${quote_local_part:${extract{-1}{+}{$local_part}}}
 
         #>> possible to scan mails at routing-time rather than at acl-time
         spamcheck:
