@@ -1,5 +1,20 @@
 # Changelog
 
+## 14.2.11
+
+### Other
+
+* version bump. [Thomas Merkel]
+* subaddressing implemented due to chenges in redis DB. [Boris Poblotzki]
+* fixes in code and readme for using IPv6. [Boris Poblotzki]
+* README edited. [Boris Poblotzki]
+* several fixes for using external scanhosts some minor typos removed, too. [Boris Poblotzki]
+* fix some minor bugs and typos after first reprov. [Boris Poblotzki]
+* mdata 20-scan-spiped.sh created. [Boris Poblotzki]
+* changed exim configfiles to be able to use external scanhost. [Boris Poblotzki]
+* external scanhost for exim - beginning impl. [Boris Poblotzki]
+* Don't use quotation mark for add_headers option. This will create crazy results for the header and copy header options sometimes to the body. [Thomas Merkel]
+
 ## 14.2.10
 
 ### Other
