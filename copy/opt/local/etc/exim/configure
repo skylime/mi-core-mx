@@ -89,7 +89,7 @@ begin acl
 			hosts         = +relay_from_hosts
 		#>> deny if listed at spamhaus
 		deny
-			message       = Sorry: $sender_host_address failed in Reverse DNS Lookup (get serious!)
+			message       = Sorry: $sender_host_address failed in Reverse DNS Lookup
 			log_message   = $sender_host_address failed in Reverse DNS Lookup - Connection denied after HELO
 			!verify       = reverse_host_lookup
 		warn
@@ -142,7 +142,7 @@ begin acl
 			             } }
 		#>> relay also mails with + in address (subaddress)
 		accept
-			message   = accepted (origin found)
+			message   = accepted (destination found)
 			# localpart+tag@domainnaame.tld
                         condition = ${if and {{match{$local_part}{\N^([^+]+)\+([^+]+)\N}} \
                                               {bool{${lookup redis{EXISTS ACCOUNTPREFIX${lc:$1}@${domain}}}} } \
@@ -150,7 +150,7 @@ begin acl
 
 		#>> we don't want them - but we take them - rfc2142 conform recipients
 		accept
-			message   = accepted (origin found.)
+			message   = accepted (destination found.)
 			# rfc2142-localpar@domainnaame.tld or without domain or hostname
 			condition = ${if or{{bool{${lookup redis{ZCARD DOMAINALI${domain}}}}} \
 			              {bool{${lookup redis{ZCARD DOMAINACC${domain}}}}} \
