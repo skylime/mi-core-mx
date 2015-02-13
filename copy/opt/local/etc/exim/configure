@@ -258,8 +258,8 @@ begin routers
 	alias:
 		caseful_local_part
 		driver = redirect
-		# Don't rewrite if it's a bounce, or from one of our own addresses.
-		senders = ! : ! ${lookup redis{EXISTS ACCOUNTPREFIX${local_part}@${domain}}}
+		# Don't rewrite if it's a bounce (sender unset)
+		senders = !
 		# Rewrite only if Entry in Alias-DB
 		headers_add = X-SRS-Rewrite: SMTP reverse-path rewritten from <$sender_address> by $primary_hostname\n\tSee SRS_URL
 		# Encode sender address, hash and timestamp according to http://www.anarres.org/projects/srs/
@@ -281,8 +281,8 @@ begin routers
 	aliascatchall:
 		caseful_local_part
 		driver          = redirect
-		# Don't rewrite if it's a bounce, or from one of our own addresses.
-		senders         = ! : ! ${lookup redis{EXISTS ACCOUNTPREFIX${local_part}@${domain}}}
+		# Don't rewrite if it's a bounce (sender unset)
+		senders         = !
 		# Rewrite only if Entry in Alias-DB
 		headers_add     = X-SRS-Rewrite: SMTP reverse-path rewritten from <$sender_address> by $primary_hostname\n\tSee SRS_URL
 		# Encode sender address, hash and timestamp according to http://www.anarres.org/projects/srs/
@@ -305,6 +305,14 @@ begin routers
 		                   } }
 		data            = ADMIN_CONTACT
 		redirect_router = intmailserver
+	#>> So leftovers: Mails with a unset sender which seam to be bounce mails
+	aliasbounces:
+		driver          = redirect
+		condition       = ${if eq{$sender_address}{}}
+		data            = ${lookup redis{HGET ALIASPREFIX${lc:$local_part}@${domain} to}{$value}{${lookup redis{HGET ALIASPREFIX*@${domain} to}{$value}}}}
+		redirect_router = intmailserver
+		#>> TODO backscatter prevention
+
 	#>> dnslookup - for all mails to external recipients - if it's not in the database
 	lookuphost:
 		driver              = dnslookup
