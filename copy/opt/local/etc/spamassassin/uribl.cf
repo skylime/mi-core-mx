@@ -9,3 +9,7 @@ body            URIBL_GREY  eval:check_uridnsbl('URIBL_GREY')
 describe        URIBL_GREY  Contains an URL listed in the URIBL greylist
 tflags          URIBL_GREY  net
 score           URIBL_GREY  0.25
+uridnsbl        URIBL_SBLXBL sbl-xbl.spamhaus.org.   TXT
+body            URIBL_SBLXBL eval:check_uridnsbl('URIBL_SBLXBL')
+describe        URIBL_SBLXBL Contains a URL listed in the SBL/XBL blocklist
+score           URIBL_SBLXBL 1.0

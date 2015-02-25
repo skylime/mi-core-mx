@@ -1,0 +1,4 @@
+# Disable HASHCASH-Check by setting use_hashcash to 0
+# or give emailadresses at hashcash_accept ( * and ? are accepted )
+use_hashcash 1
+hashcash_accept *
