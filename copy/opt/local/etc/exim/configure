@@ -254,6 +254,7 @@ begin routers
 		self       = send
 		transport  = int_lmtp
 		unseen     = true
+
 	#>> look up adress and get some more adresses
 	alias:
 		caseful_local_part
@@ -270,7 +271,8 @@ begin routers
 		                   ${lc:$address_data}}@\
 		                   ${domain}
 		data            = ${lookup redis{HGET ALIASPREFIX${lc:$local_part}@${domain} to}{$value}fail}
-		redirect_router = intmailserver
+		redirect_router = lookuphost
+
 	#>> filter allready delivered Mails 
 	allreadydelivered:
 		driver    = accept
@@ -293,7 +295,7 @@ begin routers
 		                  ${lc:$address_data}}@\
 		                  ${domain}
 		data            = ${lookup redis{HGET ALIASPREFIX*@${domain} to}{$value}fail}
-		redirect_router = intmailserver
+		redirect_router = lookuphost
 	#>> forward special emails to administrator (rfc2142) if not delivered yet
 	administrativ_mails:
 		driver          = redirect
@@ -304,13 +306,13 @@ begin routers
 		                    {eq{${domain}}{}} \
 		                   } }
 		data            = ADMIN_CONTACT
-		redirect_router = intmailserver
+		redirect_router = lookuphost
 	#>> So leftovers: Mails with a unset sender which seam to be bounce mails
 	aliasbounces:
 		driver          = redirect
 		condition       = ${if eq{$sender_address}{}}
 		data            = ${lookup redis{HGET ALIASPREFIX${lc:$local_part}@${domain} to}{$value}{${lookup redis{HGET ALIASPREFIX*@${domain} to}{$value}}}}
-		redirect_router = intmailserver
+		redirect_router = lookuphost
 		#>> TODO backscatter prevention
 
 	#>> dnslookup - for all mails to external recipients - if it's not in the database
@@ -318,7 +320,8 @@ begin routers
 		driver              = dnslookup
 		transport           = remote_smtp
 		ignore_target_hosts = 0.0.0.0 : 127.0.0.0/8
-		no_more
+		self                = pass
+		pass_router         = intmailserver
 
 
 #>>
