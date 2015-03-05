@@ -246,6 +246,14 @@ begin routers
                 condition               = ${if >{${substr{-2}{$h_X-Spam-Score:}}${substr{-1}{1}{$h_X-Spam-Score:}}}{120}}
                 transport               = man_bounce
 
+	#>> dnslookup - for all mails to external recipients according to MX-Rec
+	lookuphost:
+		driver              = dnslookup
+		transport           = remote_smtp
+		ignore_target_hosts = 0.0.0.0 : 127.0.0.0/8
+		self                = pass
+		pass_router         = intmailserver
+
 	#>> internal mailserver
 	intmailserver:
 		driver     = manualroute
@@ -314,14 +322,6 @@ begin routers
 		data            = ${lookup redis{HGET ALIASPREFIX${lc:$local_part}@${domain} to}{$value}{${lookup redis{HGET ALIASPREFIX*@${domain} to}{$value}}}}
 		redirect_router = lookuphost
 		#>> TODO backscatter prevention
-
-	#>> dnslookup - for all mails to external recipients - if it's not in the database
-	lookuphost:
-		driver              = dnslookup
-		transport           = remote_smtp
-		ignore_target_hosts = 0.0.0.0 : 127.0.0.0/8
-		self                = pass
-		pass_router         = intmailserver
 
 
 #>>
