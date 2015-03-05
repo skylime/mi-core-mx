@@ -244,7 +244,6 @@ begin routers
 		transport           = remote_smtp
 		ignore_target_hosts = 0.0.0.0 : 127.0.0.0/8
 		self                = pass
-		pass_router         = intmailserver
 
 	#>> localpart with + (like name+tag@domain.tld) will be rewritten
 	tag_rewrite:
