@@ -218,14 +218,6 @@ begin routers
 		                {${quote_local_part:$4}@$3}\
 		               }
 		headers_add = X-SRS-Return: DSN routed via $primary_hostname. See SRS_URL
-	#>>
-	tag_rewrite:
-		caseful_local_part
-		driver = redirect
-		data = ${if match{$local_part}{\N^([^+]+)\+([^+]+)\N} \
-		         {${quote_local_part:$1}@$domain}\
-		        }
-		headers_add = X-Detail: ${quote_local_part:${extract{-1}{+}{$local_part}}}
 
         #>> possible to scan mails at routing-time rather than at acl-time
         spamcheck:
@@ -253,6 +245,16 @@ begin routers
 		ignore_target_hosts = 0.0.0.0 : 127.0.0.0/8
 		self                = pass
 		pass_router         = intmailserver
+
+	#>> localpart with + (like name+tag@domain.tld) will be rewritten
+	tag_rewrite:
+		caseful_local_part
+		driver          = redirect
+		data            = ${if match{$local_part}{\N^([^+]+)\+([^+]+)\N} \
+		                    {${quote_local_part:$1}@$domain}\
+		                   }
+		headers_add     = X-Detail: ${quote_local_part:${extract{-1}{+}{$local_part}}}
+		redirect_router = lookuphost
 
 	#>> internal mailserver
 	intmailserver:
