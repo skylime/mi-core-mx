@@ -1,5 +1,21 @@
 # Changelog
 
+## 14.2.12
+
+### Other
+
+* version bump. [Thomas Merkel]
+* activate tag rewriting. [Boris Poblotzki]
+* special routing for +-localpart to local domains in alias. [Boris Poblotzki]
+* changed position of router. [Boris Poblotzki]
+* Routing based on MX-Record after alias lookup. [Boris Poblotzki]
+* spamd plugins configrured. [Boris Poblotzki]
+* changed time/cron for reloading/updating spamd. [Boris Poblotzki]
+* Added and tested config for URIBL. [Boris Poblotzki]
+* SPF check for spamassassin in init.pre activated. [Boris Poblotzki]
+* adjusted messages in smtp communication. [Boris Poblotzki]
+* better handling of bounce messages. [Boris Poblotzki]
+
 ## 14.2.11
 
 ### Other
