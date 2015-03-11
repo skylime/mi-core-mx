@@ -241,9 +241,9 @@ begin routers
 	#>> dnslookup - for all mails to external recipients according to MX-Rec
 	lookuphost:
 		driver                  = dnslookup
-		transport               = remote_smtp
-		check_secondary_mx      = true
+		condition               = ${if inlist{${primary_hostname}}{${lookup dnsdb{>: mxh=${domain}}}}{no}{yes}}
 		ignore_target_hosts     = 0.0.0.0 : 127.0.0.0/8
+		transport               = remote_smtp
 		self                    = pass
 
 	#>> localpart with + (like name+tag@domain.tld) will be rewritten
