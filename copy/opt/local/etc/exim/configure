@@ -242,6 +242,7 @@ begin routers
 	lookuphost:
 		driver              = dnslookup
 		transport           = remote_smtp
+		check_secondary_mx  = true
 		ignore_target_hosts = 0.0.0.0 : 127.0.0.0/8
 		self                = pass
 
