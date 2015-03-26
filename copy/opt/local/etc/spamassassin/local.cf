@@ -3,7 +3,8 @@
 report_safe 0
 # using pyzor hash sharing system
 pyzor_options --homedir /opt/local/etc/spamassassin
-# bayes directory
+# bayes
+use_bayes 0
 bayes_path /var/spamassassin/.spamassassin/bayes
 bayes_file_mode 0777
 # additional Header for Score - used in exim routing
