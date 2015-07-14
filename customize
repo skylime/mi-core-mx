@@ -5,15 +5,13 @@
 PATH=/opt/local/gnu/bin:/opt/local/bin:/opt/local/sbin:/usr/bin:/usr/sbin
 
 # Munin plugins
-MUNIN_PLUGIN_SRC='/opt/local/lib/munin/plugins'
-MUNIN_PLUGIN_DST='/opt/local/etc/munin/plugins'
-MUNIN_PLUGINS=(
+MUNIN_PLUGINS="
 	'clamav'
 	'exim_mailqueue'
 	'exim_mailstats'
 	'spamassassin'
 	'redis_replication_status'
-)
+"
 
 # Exit if any commands fail
 set -o errexit
@@ -57,25 +55,11 @@ echo "* Create symlink for exim (mailq,sendmail)"
 ln -sf ../../../opt/local/sbin/exim /opt/local/bin/mailq
 ln -sf ../../../opt/local/sbin/exim /opt/local/sbin/sendmail
 
-# Install rblwatch script
 echo "* Install rblwatch script"
 pip install rblwatch
 
-# Activate munin plugins
 echo "* Activate munin plugins"
-for plugin in "${MUNIN_PLUGINS[@]}"; do
-	if [ ! -x ${MUNIN_PLUGIN_SRC}/${plugin} ]; then
-		plugin_src=${plugin%_*}_
-		[ ! -x ${MUNIN_PLUGIN_SRC}/${plugin_src} ] && \
-			plugin_src=${plugin_src%%_*}_
-	else
-		plugin_src=${plugin}
-	fi
-	if [[ -x ${MUNIN_PLUGIN_SRC}/${plugin_src} ]]; then
-		echo "  ${plugin}"
-		ln -sf ${MUNIN_PLUGIN_SRC}/${plugin_src} ${MUNIN_PLUGIN_DST}/${plugin}
-	fi
-done
+/opt/core/bin/munin-node-plugins ${MUNIN_PLUGINS}
 
 # Clean up
 echo "* Cleaning up."
