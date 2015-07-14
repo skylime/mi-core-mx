@@ -1,5 +1,31 @@
 # Changelog
 
+## 14.4.0
+
+### New
+
+* Improved routing in case localhost is not part of available MX-Recs. [Boris Poblotzki]
+
+### Fix
+
+* Fixed routing issue in case MX is secondary. [Boris Poblotzki]
+* Disable bayes because we don't using in on the MX server at the moment. [Thomas Merkel]
+
+  If bayes is enabled and not used it flag also SPAM msg which aren't found
+  in the bayes database with minus something.
+
+### Other
+
+* Min ram need to be an int not string. [Thomas Merkel]
+* Dont symlink stuff use the default mailer.conf. [Thomas Merkel]
+* Update to new release version of mibe core image. [Thomas Merkel]
+
+  - modify munin setup
+  - use exim from pkgsrc
+  - cleanup
+
+* Prettified code. [Boris Poblotzki]
+
 ## 14.2.12
 
 ### Other
