@@ -45,15 +45,8 @@ echo "* Update spamd and clamd database"
 /opt/local/bin/freshclam
 pyzor --homedir /opt/local/etc/spamassassin discover
 
-# Configuring image specific packages
-echo "* Configuring image specific packages.";
-# Exim
-pkg_add http://pkgsrc.smartos.skylime.net/skylime-extra/2014Q2/x86_64/exim-4.84nb1.tgz
-
-# Create symlink for exim (mailq,sendmail,mail)
-echo "* Create symlink for exim (mailq,sendmail)"
-ln -sf ../../../opt/local/sbin/exim /opt/local/bin/mailq
-ln -sf ../../../opt/local/sbin/exim /opt/local/sbin/sendmail
+echo "* Copy mailer.conf to /etc/ because of exim usage"
+cp /opt/local/share/examples/exim/mailer.conf /etc/
 
 echo "* Install rblwatch script"
 pip install rblwatch
