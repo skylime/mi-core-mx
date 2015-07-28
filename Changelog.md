@@ -1,5 +1,14 @@
 # Changelog
 
+## %%version%% (unreleased)
+
+### New
+
+* Version Bump because of new mi-core base image. [Thomas Merkel]
+
+	The new core base image contains coreutils and some other default tools
+	which aren't in the minimal mibe image. They are still required for many
+	scripts we're using.
 
 ## 15.1.0
 
