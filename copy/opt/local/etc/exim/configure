@@ -344,6 +344,7 @@ begin transports
 	devnull:
 		driver                  = appendfile
 		file                    = /dev/null
+		disable_logging         = true
 
         #>> checking spam at routing time
         spamcheck:
