@@ -35,11 +35,6 @@ mkdir /var/spamassassin/.spamassassin
 chown -R spamd:spamd /var/spamassassin
 chown -R spamd:spamd /opt/local/etc/spamassassin
 
-# Import spamd manifest
-echo "* Import spamd manifest"
-svccfg import /tmp/spamd.xml
-rm /tmp/spamd.xml
-
 # Update spamd and clamd
 echo "* Update spamd and clamd database"
 /opt/local/bin/freshclam
