@@ -1,5 +1,20 @@
 # Changelog
 
+## 16.2.0
+
+### New
+
+* Switch to latest core-base version 16.2.2. [Thomas Merkel]
+* Disabled logging for devnull-router. [Boris Poblotzki]
+
+### Fix
+
+* Fix loading and installation of munin plugins. [Thomas Merkel]
+
+### Other
+
+* Move spamd.xml to correct location. [Thomas Merkel]
+
 ## 15.1.1
 
 ### New
