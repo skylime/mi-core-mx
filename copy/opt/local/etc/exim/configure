@@ -40,7 +40,7 @@ localpartlist rfc2142_localparts = postmaster :  abuse : noc : security : root
 
 redis_servers = 127.0.0.1//
 
-#>> submission from a local MUA or script 
+#>> submission from a local MUA or script
 #>> messages from these hosts will get fixups
 # hostlist submission_hosts        = <\n ${lookup redis{SMEMBERS submission_hosts}}
 hostlist submission_hosts        = <; 127.0.0.1;:1
@@ -119,7 +119,7 @@ begin acl
 			hosts         = +submission_hosts
 			control       = submission/domain=
 		#>> libspf2 library from http://www.libspf2.org/
-		deny 
+		deny
 			message       = [SPF] $sender_host_address is not allowed to send mail from \
 			                ${if def:sender_address_domain {$sender_address_domain}{$sender_helo_name}}. \
 			                Please see http://www.openspf.org/why.html?sender=$sender_address&ip=$sender_host_address
@@ -144,9 +144,9 @@ begin acl
 		accept
 			message       = accepted (destination found)
 			# localpart+tag@domainnaame.tld
-                        condition     = ${if and {{match{$local_part}{\N^([^+]+)\+([^+]+)\N}} \
-                                        {bool{${lookup redis{EXISTS ACCOUNTPREFIX${lc:$1}@${domain}}}} } \
-                                        {bool{${lookup redis{HGET ACCOUNTPREFIX${lc:$1}@${domain} subaddress_extension }}}}}}
+			condition     = ${if and {{match{$local_part}{\N^([^+]+)\+([^+]+)\N}} \
+			                {bool{${lookup redis{EXISTS ACCOUNTPREFIX${lc:$1}@${domain}}}} } \
+			                {bool{${lookup redis{HGET ACCOUNTPREFIX${lc:$1}@${domain} subaddress_extension }}}}}}
 
 		#>> we don't want them - but we take them - rfc2142 conform recipients
 		accept
@@ -182,7 +182,7 @@ begin acl
 			malware       = *
 		#>> skip spam scanning for large msg (larger 1M)
 		accept
-                        condition       = ${if or { {eq{DISABLEACLCHECK}{1}} {>{$message_size}{1M}}}}
+			condition       = ${if or { {eq{DISABLEACLCHECK}{1}} {>{$message_size}{1M}}}}
 			log_message     = Spam scan skipped; message too large ($message_size)
 #			add_header      = X-Spam-Report: Spam scan skipped; message too large
 			set acl_m_large = yes
@@ -219,24 +219,24 @@ begin routers
 		                          }
 		headers_add             = X-SRS-Return: DSN routed via $primary_hostname. See SRS_URL
 
-        #>> possible to scan mails at routing-time rather than at acl-time
-        spamcheck:
-                driver                  = accept
-                no_verify
-                #>> if not scanned at ACL-Time
-                condition               = ${if eq {$acl_m_noscan}{yes}}
-                #>> and if not received from local spam scan engine
-                condition               = ${if !eq {$received_protocol}{spam-scanned}}
-                transport               = spamcheck
+	#>> possible to scan mails at routing-time rather than at acl-time
+	spamcheck:
+		driver                  = accept
+		no_verify
+		#>> if not scanned at ACL-Time
+		condition               = ${if eq {$acl_m_noscan}{yes}}
+		#>> and if not received from local spam scan engine
+		condition               = ${if !eq {$received_protocol}{spam-scanned}}
+		transport               = spamcheck
 
-        #>> mails scanned at routing-time can't be bounced at acl-time - so:
-        spambounce:
-                driver                  = accept
-                condition               = ${if eq {$received_protocol}{spam-scanned}}
-                condition               = ${if and {{def:h_X-Spam-Flag:}{eq {$h_X-Spam-Flag:}{YES}}}}
-                condition               = ${if def:h_X-Spam-Score:}
-                condition               = ${if >{${substr{-2}{$h_X-Spam-Score:}}${substr{-1}{1}{$h_X-Spam-Score:}}}{120}}
-                transport               = man_bounce
+	#>> mails scanned at routing-time can't be bounced at acl-time - so:
+	spambounce:
+		driver                  = accept
+		condition               = ${if eq {$received_protocol}{spam-scanned}}
+		condition               = ${if and {{def:h_X-Spam-Flag:}{eq {$h_X-Spam-Flag:}{YES}}}}
+		condition               = ${if def:h_X-Spam-Score:}
+		condition               = ${if >{${substr{-2}{$h_X-Spam-Score:}}${substr{-1}{1}{$h_X-Spam-Score:}}}{120}}
+		transport               = man_bounce
 
 	#>> dnslookup - for all mails to external recipients according to MX-Rec
 	lookuphost:
@@ -346,25 +346,25 @@ begin transports
 		file                    = /dev/null
 		disable_logging         = true
 
-        #>> checking spam at routing time
-        spamcheck:
-                debug_print             = "T: spamassassin_pipe for $local_part@$domain"
-                driver                  = pipe
-                use_bsmtp               = true
-                transport_filter        = /opt/local/bin/spamc -F /opt/local/etc/spamassassin/spamc.conf
-                command                 = /opt/local/sbin/exim -C /opt/local/etc/exim/configure -oMr spam-scanned -bS
-                home_directory          = "/tmp"
-                current_directory       = "/tmp"
-                message_prefix          =
-                message_suffix          =
+	#>> checking spam at routing time
+	spamcheck:
+		debug_print             = "T: spamassassin_pipe for $local_part@$domain"
+		driver                  = pipe
+		use_bsmtp               = true
+		transport_filter        = /opt/local/bin/spamc -F /opt/local/etc/spamassassin/spamc.conf
+		command                 = /opt/local/sbin/exim -C /opt/local/etc/exim/configure -oMr spam-scanned -bS
+		home_directory          = "/tmp"
+		current_directory       = "/tmp"
+		message_prefix          =
+		message_suffix          =
 
-        #>> bouncing mail because of Spam
-                man_bounce:
-                  driver                = autoreply
-                  to                    = $return_path
-                  subject               = Your message: $h_subject:
-                  text                  = "We are very sorry, but the message you sent was declared as highrated Spam! \
-                                          If you think this is an error, please contact your provider. We apologise for any inconvenience."
+	#>> bouncing mail because of Spam
+	man_bounce:
+		driver                = autoreply
+		to                    = $return_path
+		subject               = Your message: $h_subject:
+		text                  = "We are very sorry, but the message you sent was declared as highrated Spam! \
+		                        If you think this is an error, please contact your provider. We apologise for any inconvenience."
 
 
 #>>
