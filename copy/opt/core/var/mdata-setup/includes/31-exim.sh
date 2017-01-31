@@ -32,3 +32,15 @@ if mdata-get dkim_selector 1>/dev/null 2>&1; then
 else
 	echo "DKIM_SELECTOR = dkim" >> $EXIMLOCAL
 fi
+
+# Allow to overwrite the default mailbox delivery for non core.io
+# mailbox servers for example.
+if mdata-get mbox_smtp_addr 1>/dev/null 2>&1; then
+	# Overwrite the LMTP connection which should be default
+	echo "MAILBOX_SERVER   = $(mdata-get mbox_smtp_addr)" >> $EXIMLOCAL
+	echo "MAILBOX_SRV_PORT = 25" >> $EXIMLOCAL
+	echo "MAILBOX_TRANSPORT= int_smtp" >> $EXIMLOCAL
+else if mdata-get mbox_lmtp_addr 1>/dev/null 2>&1 && mdata-get mbox_lmtp_key 1>/dev/null 2>&1; then
+	# Secure the lmtp connection via spiped
+	/opt/core/bin/spiped-configure-smf mbox-lmtp encrypt [127.0.0.1]:24 $(mdata-get mbox_lmtp_addr):2424 $(mdata-get mbox_lmtp_key)
+fi
