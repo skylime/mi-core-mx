@@ -20,6 +20,7 @@ SRS_URL         = http://www.infradead.org/rpr.html
 # Default Mailbox Server
 MAILBOX_SERVER   = 127.0.0.1
 MAILBOX_SRV_PORT = 24
+MAILBOX_TRANSPORT= int_lmtp
 
 # Scan Mails for Spam at ACL-time - otherwise set to 1
 DISABLEACLCHECK  = 0
@@ -262,7 +263,7 @@ begin routers
 		condition               = ${lookup redis{EXISTS ACCOUNTPREFIX${lc:$local_part}@${domain}}}
 		route_data              = MAILBOX_SERVER
 		self                    = send
-		transport               = int_lmtp
+		transport               = MAILBOX_TRANSPORT
 		unseen                  = true
 
 	#>> look up adress and get some more adresses
@@ -335,11 +336,15 @@ begin transports
 		dkim_selector           = DKIM_SELECTOR
 		dkim_private_key        = DEFAULT_DOMAINKEY
 		dkim_canon              = relaxed
-	#>> via lmtp to our own Infrstructure
+	#>> via lmtp to our own Infrastructure
 	int_lmtp:
 		driver                  = smtp
 		protocol                = lmtp
 		port                    = MAILBOX_SRV_PORT
+	#>> via smtp to our own Infrastructure
+	int_smtp:
+		driver                  = smtp
+		protocol                = smtp
 	#>> for mails allready routed
 	devnull:
 		driver                  = appendfile
