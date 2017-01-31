@@ -179,7 +179,6 @@ begin acl
 		deny
 			message       = This message contains malware ($malware_name)
 			condition     = ${if < {$message_size}{25M}}
-			demime        = *
 			malware       = *
 		#>> skip spam scanning for large msg (larger 1M)
 		accept
