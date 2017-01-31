@@ -345,6 +345,7 @@ begin transports
 	int_smtp:
 		driver                  = smtp
 		protocol                = smtp
+		port                    = MAILBOX_SRV_PORT
 	#>> for mails allready routed
 	devnull:
 		driver                  = appendfile
