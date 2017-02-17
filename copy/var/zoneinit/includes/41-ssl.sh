@@ -9,10 +9,10 @@ SSL_HOME='/opt/local/etc/exim/ssl/'
 mkdir -p "${SSL_HOME}"
 
 # Use user certificate if provided
-if mdata-get exim_ssl 1>/dev/null 2>&1; then
+if mdata-get mx_ssl 1>/dev/null 2>&1; then
 	(
 	umask 0077
-	mdata-get exim_ssl > "${SSL_HOME}/exim.pem"
+	mdata-get mx_ssl > "${SSL_HOME}/exim.pem"
 	# Split files for exim usage
 	openssl pkey -in "${SSL_HOME}/exim.pem" -out "${SSL_HOME}/exim.key"
 	openssl crl2pkcs7 -nocrl -certfile "${SSL_HOME}/exim.pem" | \
