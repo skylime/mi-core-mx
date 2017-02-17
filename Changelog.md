@@ -1,5 +1,28 @@
 # Changelog
 
+## 16.4.0
+
+### New
+
+* Support Lets Encrypt. [Thomas Merkel]
+* Provide the option to use external smtp servers instead of only an remote lmtp server from core.io. [Thomas Merkel]
+* Provide the option to change the mailbox delivery protocol from lmtp to smtp if required. [Thomas Merkel]
+
+### Changes
+
+* Fix if for `mbox_lmtp_addr`. [Thomas Merkel]
+* Remove demime becauese exim is no longer compiled with WITH_OLD_DEMIME. [Thomas Merkel]
+* Update to core-base 16.04 version. [Thomas Merkel]
+
+### Other
+
+* Fix permissions for ssl certificates. [Thomas Merkel]
+* Update license file. [Thomas Merkel]
+* Also allow different SMTP port if needed. [Thomas Merkel]
+* Fix permission for scan-spiped script. [Thomas Merkel]
+* Remove unused .gitignore file. [Thomas Merkel]
+* Fix config style guide. [Thomas Merkel]
+
 ## 16.2.0
 
 ### New
