@@ -11,7 +11,7 @@ mkdir -p "${SSL_HOME}"
 # Use user certificate if provided
 if mdata-get mx_ssl 1>/dev/null 2>&1; then
 	(
-	umask 0077
+	umask 0027
 	mdata-get mx_ssl > "${SSL_HOME}/exim.pem"
 	# Split files for exim usage
 	openssl pkey -in "${SSL_HOME}/exim.pem" -out "${SSL_HOME}/exim.key"
@@ -26,7 +26,7 @@ else
 		LE_LIVE="${LE_HOME}live/$(hostname)/"
 		# Workaround to copy correct files for SSL_HOME
 		(
-		umask 0077
+		umask 0027
 		cat ${LE_LIVE}/fullchain.pem > ${SSL_HOME}/exim.crt
 		cat ${LE_LIVE}/privkey.pem   > ${SSL_HOME}/exim.key
 		chgrp mail ${SSL_HOME}/exim.*
