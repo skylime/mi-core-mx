@@ -32,9 +32,9 @@ fi
 # mailbox servers for example.
 if mdata-get mbox_smtp_addr 1>/dev/null 2>&1; then
 	# Overwrite the LMTP connection which should be default
-	echo "MAILBOX_SERVER   = $(mdata-get mbox_smtp_addr)" >> $EXIMLOCAL
-	echo "MAILBOX_SRV_PORT = 25" >> $EXIMLOCAL
-	echo "MAILBOX_TRANSPORT= int_smtp" >> $EXIMLOCAL
+	echo "MAILBOX_SERVER   == $(mdata-get mbox_smtp_addr)" >> $EXIMLOCAL
+	echo "MAILBOX_SRV_PORT == 25" >> $EXIMLOCAL
+	echo "MAILBOX_TRANSPORT== int_smtp" >> $EXIMLOCAL
 fi
 
 if mdata-get mbox_lmtp_addr 1>/dev/null 2>&1 && mdata-get mbox_lmtp_key 1>/dev/null 2>&1; then
