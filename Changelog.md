@@ -1,5 +1,12 @@
 # Changelog
 
+## 17.1.0
+
+### New
+
+- Version bump to 17.1 core-base. [Thomas Merkel]
+- Allow overwrite by SMTP usage. [Thomas Merkel]
+
 ## 16.4.0
 
 ### New
