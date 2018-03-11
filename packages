@@ -9,3 +9,4 @@ hiredis
 py27-pip
 py27-gdbm
 p5-Mail-DKIM
+base64
