@@ -1,5 +1,20 @@
 # Changelog
 
+## 17.4.0
+
+### New
+
+- Exim update. [Thomas Merkel]
+- Version bump to 17.4.1 core-base. [Thomas Merkel]
+
+### Changes
+
+- Do not keep any environment variables. [Thomas Merkel]
+- Verify LMTP spiped connections for 127.0.0.1 with real certificate
+  hostname for mbox server. [Thomas Merkel]
+- Add base64 because its required by spipe config scripts. [Thomas
+  Merkel]
+
 ## 17.1.0
 
 ### New
