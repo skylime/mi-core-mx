@@ -74,6 +74,9 @@ tls_advertise_hosts        = *
 tls_certificate            = /opt/local/etc/exim/ssl/exim.crt
 tls_privatekey             = /opt/local/etc/exim/ssl/exim.key
 
+#>> Environment security
+keep_environment =
+
 #>> Logging
 #>> Syslog and extra exim log files
 log_file_path              = :syslog
