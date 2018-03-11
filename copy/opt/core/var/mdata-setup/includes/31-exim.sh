@@ -40,4 +40,6 @@ fi
 if mdata-get mbox_lmtp_addr 1>/dev/null 2>&1 && mdata-get mbox_lmtp_key 1>/dev/null 2>&1; then
 	# Secure the lmtp connection via spiped
 	/opt/core/bin/spiped-configure-smf mbox-lmtp encrypt [127.0.0.1]:24 $(mdata-get mbox_lmtp_addr):2424 $(mdata-get mbox_lmtp_key)
+	# Provide trusted TLS connection and verification in exim
+	echo "TLS_VERIFY_CERT_HOSTNAMES == $(mdata-get mbox_lmtp_addr}" >> $EXIMLOCAL
 fi

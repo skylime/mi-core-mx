@@ -22,6 +22,9 @@ MAILBOX_SERVER   = 127.0.0.1
 MAILBOX_SRV_PORT = 24
 MAILBOX_TRANSPORT= int_lmtp
 
+# TLS verify for LMTP connections
+TLS_VERIFY_CERT_HOSTNAMES = *
+
 # Scan Mails for Spam at ACL-time - otherwise set to 1
 DISABLEACLCHECK  = 0
 
@@ -337,9 +340,10 @@ begin transports
 		dkim_canon              = relaxed
 	#>> via lmtp to our own Infrastructure
 	int_lmtp:
-		driver                  = smtp
-		protocol                = lmtp
-		port                    = MAILBOX_SRV_PORT
+		driver                    = smtp
+		protocol                  = lmtp
+		port                      = MAILBOX_SRV_PORT
+		tls_verify_cert_hostnames = TLS_VERIFY_CERT_HOSTNAMES
 	#>> via smtp to our own Infrastructure
 	int_smtp:
 		driver                  = smtp
