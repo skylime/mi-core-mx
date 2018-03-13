@@ -6,4 +6,4 @@ description="core.io MX Server"
 homepage="https://github.com/skylime/mi-core-mx"
 users="root admin"
 minram=1024
-base="ac65d146-fef1-4bfd-abb7-18d89cc6ec15"
+base="bb1eb610-6381-4f84-8251-b45af9efdea1"
