@@ -1,5 +1,15 @@
 # Changelog
 
+## 17.4.1
+
+### New
+
+- Switch to latest core-base version. [Thomas Merkel]
+
+### Fix
+
+- Fix script to support non gnu-find. [Thomas Merkel]
+
 ## 17.4.0
 
 ### New
