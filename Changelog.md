@@ -9,6 +9,8 @@
 ### Fix
 
 - Fix script to support non gnu-find. [Thomas Merkel]
+- Exim-cron script should not fail if db folder doesn't exists. [Thomas
+  Merkel]
 
 ## 17.4.0
 
