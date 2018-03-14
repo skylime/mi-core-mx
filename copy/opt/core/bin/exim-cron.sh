@@ -80,7 +80,7 @@ fi
 
 # run tidydb as mail:mail
 if [ -x /opt/local/sbin/exim_tidydb ]; then
-  cd $SPOOLDIR/db || exit 1
+  cd $SPOOLDIR/db || exit 0
   find * -maxdepth 1 \( -name '*.lockfile' -or -name 'log.*' \) \
     -and -type f -print0 | \
     sudo -u mail xargs -0r -n 1 /opt/local/sbin/exim_tidydb $SPOOLDIR > /dev/null
