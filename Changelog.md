@@ -1,5 +1,11 @@
 # Changelog
 
+## 17.4.2
+
+### Fix
+
+- Fix exim-cron.sh again to work with non-gnu-xargs. [Thomas Merkel]
+
 ## 17.4.1
 
 ### New
