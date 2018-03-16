@@ -181,33 +181,29 @@ begin acl
 			message       = relay not permitted - recipient unknown
 
 	acl_check_data:
-		#>> the clamav job 
-		deny
-			message       = This message contains malware ($malware_name)
-			condition     = ${if < {$message_size}{25M}}
-			malware       = *
-		#>> skip spam scanning for large msg (larger 1M)
-		accept
-			condition       = ${if or { {eq{DISABLEACLCHECK}{1}} {>{$message_size}{1M}}}}
-			log_message     = Spam scan skipped; message too large ($message_size)
-#			add_header      = X-Spam-Report: Spam scan skipped; message too large
-			set acl_m_large = yes
 		#>> put headers in all messages (no matter if spam or not)
 		warn
 			spam          = nobody:true/defer_ok
-			add_header    = X-Spam-Score: $spam_score
-			add_header    = X-Spam-Level: $spam_bar
-		#>> put Spam Flag in messages with score > 5
+		#>> Remove foreign headers
 		warn
-			spam          = nobody:true/defer_ok
-			condition     = ${if >{$spam_score_int}{50}{true}{false}}
-			add_header    = X-Spam-Flag: YES
-			add_header    = X-Spam-Report: $spam_report
-		#>> reject spam at high scores (> 12)
+			remove_header = x-spam-bar : x-spam-score : x-spam-report : x-spam-status : x-spam-level
+		#>> add spam-score and spam-report header when "add header" action is recommended by rspamd
+		warn
+			condition  = ${if eq{$spam_action}{add header}}
+			add_header = X-Spam-Score: $spam_score ($spam_bar)
+ 			add_header = X-Spam-Report: $spam_report
+		#>> add x-spam-status header if message is not ham
+		warn
+			 ! condition  = ${if match{$spam_action}{^no action\$|^greylist\$}}
+ 			add_header    = X-Spam-Status: Yes
+		#>> add x-spam-bar header if score is positive
+ 		warn
+			condition  = ${if >{$spam_score_int}{0}}
+			add_header = X-Spam-Bar: $spam_bar
+		#>> reject spam at high scores
 		deny
-			message       = This message scored $spam_score spam points.
-			spam          = nobody:true/defer_ok
-			condition     = ${if >{$spam_score_int}{120}{true}{false}}
+			message   = This message scored $spam_score spam points.
+			condition = ${if eq{$spam_action}{reject}}
 		#>> default accept
 		accept
 
