@@ -2,4 +2,4 @@
 ## will be overwritten by /opt/core/var/mdata-setup/includes/20-scan-spiped.sh
 
 #>> SpamScanner - we use rspamd
-spamd_address = 127.0.0.1 11133 variant=rspamd
+spamd_address = 127.0.0.1 11333 variant=rspamd
