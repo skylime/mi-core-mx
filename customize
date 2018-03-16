@@ -16,29 +16,8 @@ MUNIN_PLUGINS="
 # Exit if any commands fail
 set -o errexit
 
-echo "* Create clamav logging directory"
-mkdir -p /var/log/clamav
-chown clamav:clamav /var/log/clamav
-
 echo "* Create ssl folder"
 mkdir -p /opt/local/etc/exim/ssl
-
-# Create extra user for spamd
-echo "* Create spamd group and user"
-groupadd spamd
-useradd -d /var/spamassassin -c "spamassassin spamd user" -s /usr/bin/false -g spamd spamd
-passwd -N spamd
-
-# Change default permissions for spamd folder
-echo "* Update permissions for spamassassin folders"
-mkdir /var/spamassassin/.spamassassin
-chown -R spamd:spamd /var/spamassassin
-chown -R spamd:spamd /opt/local/etc/spamassassin
-
-# Update spamd and clamd
-echo "* Update spamd and clamd database"
-/opt/local/bin/freshclam
-pyzor --homedir /opt/local/etc/spamassassin discover
 
 echo "* Copy mailer.conf to /etc/ because of exim usage"
 cp /opt/local/share/examples/exim/mailer.conf /etc/
