@@ -25,6 +25,9 @@ cp /opt/local/share/examples/exim/mailer.conf /etc/
 echo "* Install rblwatch script"
 pip install rblwatch
 
+echo "* Fix rspamd PID directory to /var/run"
+gsed -i 's:$RUNDIR:/var/run:g' /opt/local/etc/rspamd/rspamd.conf
+
 echo "* Activate munin plugins"
 /opt/core/bin/munin-node-plugins ${MUNIN_PLUGINS}
 
