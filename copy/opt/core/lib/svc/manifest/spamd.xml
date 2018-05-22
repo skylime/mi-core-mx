@@ -13,7 +13,7 @@
     <dependency name='autofs' grouping='optional_all' restart_on='error' type='service'>
       <service_fmri value='svc:/system/filesystem/autofs:default'/>
     </dependency>
-    <exec_method name='start' type='method' exec='/opt/local/bin/spamd -r /var/spamassassin/spamd.pid -i 127.0.0.1 -p 11133 -u spamd --syslog-socket=native' timeout_seconds='60'>
+    <exec_method name='start' type='method' exec='/opt/local/bin/spamd -r /var/spamassassin/spamd.pid -i 127.0.0.1 -p 11133 -u spamd --syslog-socket=none -s /var/log/spamd/spamd.log' timeout_seconds='60'>
     <method_context working_directory='/var/spamassassin' project='default'>
       <method_credential user='root' group='root'/>
       <method_environment>

@@ -35,6 +35,11 @@ mkdir /var/spamassassin/.spamassassin
 chown -R spamd:spamd /var/spamassassin
 chown -R spamd:spamd /opt/local/etc/spamassassin
 
+# Create logging folder for spamd
+echo "* Create logging folder for spamd"
+mkdir /var/log/spamd
+chown -R spamd:spamd /var/log/spamd
+
 # Update spamd and clamd
 echo "* Update spamd and clamd database"
 /opt/local/bin/freshclam
