@@ -72,7 +72,7 @@ if [ "$E4BCD_WATCH_PANICLOG" != "no" ]; then
         log_this "PANIC: sending out e-mail warning has failed, exim has non-zero return code"
       fi
       if [ "$E4BCD_WATCH_PANICLOG" = "once" ]; then
-        logadm -p now -C 10 -o mail -g mail -m 640 /var/log/exim/panic
+        logadm -p now -C 7 -o mail -g mail -m 640 /var/log/exim/panic
       fi
     fi
   fi
