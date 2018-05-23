@@ -5,4 +5,4 @@
 av_scanner = clamd:127.0.0.1 3310
 
 #>> SpamScanner - we use rspamd in a spamassassins mannor
-spamd_address = 127.0.0.1 11133
+spamd_address = 127.0.0.1 11333
