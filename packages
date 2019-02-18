@@ -1,5 +1,5 @@
 # List packages to add to your image one per line.
-https://pkgsrc.smartos.skylime.net/skylime-extra/2017Q4/x86_64/exim-4.90.1.tgz
+exim
 clamav
 spamassassin
 pyzor

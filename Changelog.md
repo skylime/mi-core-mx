@@ -1,5 +1,18 @@
 # Changelog
 
+## 18.4.0
+
+### New
+
+* Switch to default spamd port 11333. [Thomas Merkel]
+* No syslog for spamd, use regular file in /var/log/spamd/spamd.log. [Thomas Merkel]
+* No syslog for exim, use regular logfiles. [Thomas Merkel]
+* Provide logadm rules for all mail services. [Thomas Merkel]
+
+### Fix
+
+* Disable verbose logging for clamd and disable automatically rotate. [Thomas Merkel]
+
 ## 17.4.2
 
 ### Fix
