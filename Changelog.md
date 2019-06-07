@@ -4,14 +4,24 @@
 
 ### New
 
+* Version bump to latest core-base. [Thomas Merkel]
+* Run sa-update as postinit command. [Thomas Merkel]
+* Exim version bump. [Thomas Merkel]
 * Switch to default spamd port 11333. [Thomas Merkel]
-* No syslog for spamd, use regular file in /var/log/spamd/spamd.log. [Thomas Merkel]
-* No syslog for exim, use regular logfiles. [Thomas Merkel]
 * Provide logadm rules for all mail services. [Thomas Merkel]
 
 ### Fix
 
+* Set default ADMIN_CONTACT correctly. [Thomas Merkel]
+* Provide correct error handling / ignoring errors if possible. [Thomas Merkel]
+* Handle errors correctly if scan_host is not set via mdata. [Thomas Merkel]
+
+### Other
+
+* Move zoneinit scripts, removing mdata-setup part. [Thomas Merkel]
 * Disable verbose logging for clamd and disable automatically rotate. [Thomas Merkel]
+* No syslog for spamd, use regular file in /var/log/spamd/spamd.log. [Thomas Merkel]
+* No syslog for exim, use regular logfiles. [Thomas Merkel]
 
 ## 17.4.2
 
