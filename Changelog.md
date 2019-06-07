@@ -1,5 +1,11 @@
 # Changelog
 
+## 18.4.1
+
+### Fix
+
+* Don't try to restart sa in postinit - it's not running yet. [Thomas Merkel]
+
 ## 18.4.0
 
 ### New
