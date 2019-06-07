@@ -12,9 +12,6 @@ STARTPORT=42000
 # Exims scanner config
 EXIMSC='/opt/local/etc/exim/configure.scanner'
 
-# read scan hosts from mdata
-SCANHOST="$(mdata-get scan_host 2>/dev/null)"
-
 ## remove all scan spipes
 for SCANPIPE in $(/usr/bin/svcs -H -o FMRI $SCANFMRI 2>/dev/null)
 do
@@ -26,8 +23,7 @@ do
 done
 
 ## Scan Hosts in mdata?
-if [ -z "$SCANHOST" ]
-then 
+if ! mdata-get scan_host >/dev/null 2>&1; then
   ## No
   ## create exim config for local scanner
   rm $EXIMSC 1>/dev/null 2>&1
@@ -35,8 +31,9 @@ then
   ## start local scanner
   /usr/sbin/svcadm enable svc:/pkgsrc/clamav:clamd
   /usr/sbin/svcadm enable svc:/network/spamd:default
-else 
+else
   ## Yes
+  SCANHOST="$(mdata-get scan_host)"
   CLAMEXIM=''
   SPAMEXIM=''
   for SPHOST in ${SCANHOST}
