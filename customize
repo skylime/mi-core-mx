@@ -48,9 +48,6 @@ pyzor --homedir /opt/local/etc/spamassassin discover
 echo "* Copy mailer.conf to /etc/ because of exim usage"
 cp /opt/local/share/examples/exim/mailer.conf /etc/
 
-echo "* Install rblwatch script"
-pip install rblwatch
-
 echo "* Activate munin plugins"
 /opt/core/bin/munin-node-plugins ${MUNIN_PLUGINS}
 

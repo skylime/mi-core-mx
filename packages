@@ -6,6 +6,4 @@ pyzor
 p5-DB_File
 redis
 hiredis
-py27-pip
-py27-gdbm
 p5-Mail-DKIM
