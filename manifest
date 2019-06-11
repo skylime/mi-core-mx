@@ -1,7 +1,7 @@
 name="core-mx"
 organization="SkyLime"
 brand="Instance"
-version="18.4.1"
+version="18.4.2"
 description="core.io MX Server"
 homepage="https://github.com/skylime/mi-core-mx"
 users="root admin"
