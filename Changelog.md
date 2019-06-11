@@ -1,5 +1,17 @@
 # Changelog
 
+## 18.4.2
+
+### New
+
+* Replace python rblwatch/rblcheck script with new shell implementation. [Thomas Merkel]
+* Support non-gnu coreutils. [Thomas Merkel]
+
+### Fix
+
+* Fix if exim db not exists yet. [Thomas Merkel]
+* Adjust log location for spamassassin munin plugin. [Sebastian Wiedenroth]
+
 ## 18.4.1
 
 ### Fix
