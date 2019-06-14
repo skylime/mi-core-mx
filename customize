@@ -13,6 +13,10 @@ MUNIN_PLUGINS="
 	redis_replication_status
 "
 
+# rblcheck.sh version
+RBLCHECK_VERSION=1.0
+RBLCHECK_URL="https://raw.githubusercontent.com/drscream/rblcheck.sh/v${RBLCHECK_VERSION}/rblcheck.sh"
+
 # Exit if any commands fail
 set -o errexit
 
@@ -50,6 +54,9 @@ cp /opt/local/share/examples/exim/mailer.conf /etc/
 
 echo "* Activate munin plugins"
 /opt/core/bin/munin-node-plugins ${MUNIN_PLUGINS}
+
+echo "* Download rblcheck.sh"
+( cd /opt/core/bin && curl -O ${RBLCHECK_URL} && chmod 755 rblcheck.sh )
 
 echo "* Cleanup home/admin because of delegate dataset usage"
 rm -rf /home/admin/.[^.]*
