@@ -1,5 +1,13 @@
 # Changelog
 
+## 18.4.3
+
+### Fix
+
+* Exim update to 4.92.2. [Thomas Merkel]
+* Rblcheck.sh version bump, extra TXT info newline issue fix. [Thomas Merkel]
+* Download rblcheck.sh from remote with version information. [Thomas Merkel]
+
 ## 18.4.2
 
 ### New
