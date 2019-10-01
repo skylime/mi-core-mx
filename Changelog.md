@@ -1,5 +1,11 @@
 # Changelog
 
+## 18.4.4
+
+### Fix
+
+* Exim update to 4.92.3 to fix CVE-2019-16928. [Thomas Merkel]
+
 ## 18.4.3
 
 ### Fix
