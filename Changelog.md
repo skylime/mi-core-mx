@@ -1,5 +1,12 @@
 # Changelog
 
+## 20.1.0
+
+### New
+
+* Refresh image and use latest core-base release. [Thomas Merkel]
+* Update pyzor to git version 1.1.1. [Thomas Merkel]
+
 ## 18.4.4
 
 ### Fix
