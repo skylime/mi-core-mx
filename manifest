@@ -1,9 +1,9 @@
 name="core-mx"
 organization="SkyLime"
 brand="Instance"
-version="20.1.0"
+version="20.4.0"
 description="core.io MX Server"
 homepage="https://github.com/skylime/mi-core-mx"
 users="root admin"
 minram=1024
-base="44faf983-3442-4b9f-aca4-de786f6b6a03"
+base="b17e3cc1-5993-4af9-9e5e-70653fa856f6"
