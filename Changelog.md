@@ -1,5 +1,22 @@
 # Changelog
 
+## 20.4.0
+
+### New
+
+* Use 2020Q4 core-base. [Thomas Merkel]
+* Add and use unbound as default resolver. [Thomas Merkel]
+* Use own exim version and install unbound. [Thomas Merkel]
+* Update to latest rblcheck.sh version 1.3. [Thomas Merkel]
+
+### Fix
+
+* Fix file permissions for zoneinit scripts. [Thomas Merkel]
+
+### Other
+
+* Update license information. [Thomas Merkel]
+
 ## 20.1.0
 
 ### New
