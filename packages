@@ -4,5 +4,4 @@ clamav
 rspamd
 redis
 hiredis
-p5-Mail-DKIM
 unbound
