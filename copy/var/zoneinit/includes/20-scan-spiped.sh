@@ -27,7 +27,6 @@ if ! mdata-get scan_host >/dev/null 2>&1; then
   ln -s "${EXIMSC}.local" $EXIMSC
   ## start local scanner
   /usr/sbin/svcadm enable svc:/pkgsrc/clamav:clamd
-  /usr/sbin/svcadm enable svc:/network/spamd:default
 else
   ## Yes
   SCANHOST="$(mdata-get scan_host)"
@@ -69,7 +68,6 @@ else
 
   ## stop local scanner
   /usr/sbin/svcadm disable svc:/pkgsrc/clamav:clamd
-  /usr/sbin/svcadm disable svc:/network/spamd:default
 fi
 
 
