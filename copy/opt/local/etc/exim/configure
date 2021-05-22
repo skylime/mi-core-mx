@@ -186,6 +186,9 @@ begin acl
 			message       = This message contains malware ($malware_name)
 			condition     = ${if < {$message_size}{25M}}
 			malware       = *
+		#>> Remove foreign headers
+		warn
+			remove_header = x-spam-bar : x-spam-score : x-spam-report : x-spam-status
 		#>> skip spam scanning for large msg (larger 1M)
 		accept
 			condition       = ${if or { {eq{DISABLEACLCHECK}{1}} {>{$message_size}{1M}}}}
@@ -197,10 +200,11 @@ begin acl
 			spam          = nobody:true/defer_ok
 			add_header    = X-Spam-Score: $spam_score
 			add_header    = X-Spam-Level: $spam_bar
-		#>> put Spam Flag in messages with score > 5
+		#>> put Spam Flag in messages if message is not ham
+		#>> do not match when $spam_action is empty (e.g. when rspamd is not running)
 		warn
 			spam          = nobody:true/defer_ok
-			condition     = ${if >{$spam_score_int}{50}{true}{false}}
+			! condition   = ${if match{$spam_action}{^no action\$|^greylist\$|^\$}}
 			add_header    = X-Spam-Flag: YES
 			add_header    = X-Spam-Report: $spam_report
 		#>> reject spam at high scores (> 12)

@@ -29,6 +29,10 @@ mkdir -p /opt/local/etc/exim/ssl
 echo "* Copy mailer.conf to /etc/ because of exim usage"
 cp /opt/local/share/examples/exim/mailer.conf /etc/
 
+echo "* Create folders for redis api-repl"
+mkdir -p /var/db/redis/{api-repl,rspamd}
+chown -R redis:redis /var/db/redis
+
 echo "* Activate munin plugins"
 /opt/core/bin/munin-node-plugins ${MUNIN_PLUGINS}
 
