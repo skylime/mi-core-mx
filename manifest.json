@@ -1,11 +1,11 @@
 {
 	"name":         "core-mx",
-	"version":      "20.4.0",
+	"version":      "22.4.0",
 	"description":  "core.io MX Server",
 	"organization": "SkyLime",
 	"brand":        "Instance",
 	"homepage":     "https://github.com/skylime/mi-core-mx",
-	"base":         "b17e3cc1-5993-4af9-9e5e-70653fa856f6",
+	"base":         "00a116f1-3f5a-4f81-8685-b452c03a263c",
 	"minram":       1024,
 	"customer_metadata": {
 		"admin_authorized_keys": {"type": "text", "description": "SSH public authorized key(s) for the admin user"},

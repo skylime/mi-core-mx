@@ -1,8 +1,8 @@
 # List packages to add to your image one per line.
-https://pkgsrc.smartos.skylime.net/skylime-extra/2020Q4/x86_64/exim-4.94.2.tgz
+exim
 clamav
 spamassassin
-https://pkgsrc.smartos.skylime.net/skylime-extra/2020Q4/x86_64/pyzor-1.1.1.tgz
+https://packages.pkgsrc.pub/skylime-extra/SmartOS/2022Q4/x86_64/pyzor-1.1.1.tgz
 redis
 hiredis
 p5-Mail-DKIM
