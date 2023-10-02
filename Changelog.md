@@ -1,5 +1,23 @@
 # Changelog
 
+## 22.4.0
+
+### New
+
+* Switch to 2022Q4 (core-base) [Thomas Merkel]
+
+  Using latest core-base image from 2022Q4 with pkgsrc LTS branch.
+  Including self-build pyzor and switching to stable exim version.
+
+### Fix
+
+* Quote redis lookups in exim configuration. [Thomas Merkel]
+
+### Other
+
+* Switch to self-build exim version with required security fixes. [Thomas Merkel]
+* Switch to latest core-base 22.4.1. [Thomas Merkel]
+
 ## 20.4.0
 
 ### New
