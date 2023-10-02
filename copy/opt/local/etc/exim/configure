@@ -153,7 +153,7 @@ begin acl
 			# localpart+tag@domainnaame.tld
 			condition     = ${if and {{match{$local_part}{\N^([^+]+)\+([^+]+)\N}} \
 			                {bool{${lookup redis{EXISTS ACCOUNTPREFIX${lc:$1}@${domain}}}} } \
-			                {bool{${lookup redis{HGET ACCOUNTPREFIX${lc:$1}@${domain} subaddress_extension }}}}}}
+			                {bool{${lookup redis{HGET ${quote_redis:ACCOUNTPREFIX${lc:$1}@${domain}} subaddress_extension }}}}}}
 
 		#>> we don't want them - but we take them - rfc2142 conform recipients
 		accept
@@ -286,7 +286,7 @@ begin routers
 		errors_to               = ${quote_local_part:SRS0+${length_SRS_HASH_LENGTH:${hmac{sha1}{SRS_SECRET}{${lc:$address_data}}}}+\
 		                          ${lc:$address_data}}@\
 		                          ${domain}
-		data                    = ${lookup redis{HGET ALIASPREFIX${lc:$local_part}@${domain} to}{$value}fail}
+		data                    = ${lookup redis{HGET ${quote_redis:ALIASPREFIX${lc:$local_part}@${domain}} to}{$value}fail}
 		redirect_router         = lookuphost
 
 	#>> filter allready delivered Mails 
@@ -310,7 +310,7 @@ begin routers
 		errors_to               = ${quote_local_part:SRS0+${length_SRS_HASH_LENGTH:${hmac{sha1}{SRS_SECRET}{${lc:$address_data}}}}+\
 		                          ${lc:$address_data}}@\
 		                          ${domain}
-		data                    = ${lookup redis{HGET ALIASPREFIX*@${domain} to}{$value}fail}
+		data                    = ${lookup redis{HGET ${quote_redis:ALIASPREFIX*@${domain}} to}{$value}fail}
 		redirect_router         = lookuphost
 	#>> forward special emails to administrator (rfc2142) if not delivered yet
 	administrativ_mails:
@@ -327,7 +327,7 @@ begin routers
 	aliasbounces:
 		driver                  = redirect
 		condition               = ${if eq{$sender_address}{}}
-		data                    = ${lookup redis{HGET ALIASPREFIX${lc:$local_part}@${domain} to}{$value}{${lookup redis{HGET ALIASPREFIX*@${domain} to}{$value}}}}
+		data                    = ${lookup redis{HGET ${quote_redis:ALIASPREFIX${lc:$local_part}@${domain}} to}{$value}{${lookup redis{HGET ${quote_redis:ALIASPREFIX*@${domain}} to}{$value}}}}
 		redirect_router         = lookuphost
 
 #>>
