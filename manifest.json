@@ -5,7 +5,7 @@
 	"organization": "SkyLime",
 	"brand":        "Instance",
 	"homepage":     "https://github.com/skylime/mi-core-mx",
-	"base":         "00a116f1-3f5a-4f81-8685-b452c03a263c",
+	"base":         "d2b4c993-44d0-4c63-99ba-7b7e36eacbc8",
 	"minram":       1024,
 	"customer_metadata": {
 		"admin_authorized_keys": {"type": "text", "description": "SSH public authorized key(s) for the admin user"},
