@@ -1,5 +1,19 @@
 # Changelog
 
+
+## 23.4.0
+
+### New
+
+* Update RBLCHECK to version 1.4. [Thomas Merkel]
+* Change pyzor version for 2023Q4 release. [Thomas Merkel]
+* Switch to 2023Q4 release. [Thomas Merkel]
+* Use quote_redis in exim configuration
+
+### Other
+
+* Update license. [Thomas Merkel]
+
 ## 22.4.0
 
 ### New
