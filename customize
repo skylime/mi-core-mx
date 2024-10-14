@@ -14,7 +14,7 @@ MUNIN_PLUGINS="
 "
 
 # rblcheck.sh version
-RBLCHECK_VERSION=1.3
+RBLCHECK_VERSION=1.4
 RBLCHECK_URL="https://raw.githubusercontent.com/drscream/rblcheck.sh/v${RBLCHECK_VERSION}/rblcheck.sh"
 
 # Exit if any commands fail
@@ -56,7 +56,7 @@ echo "* Activate munin plugins"
 /opt/core/bin/munin-node-plugins ${MUNIN_PLUGINS}
 
 echo "* Download rblcheck.sh"
-( cd /opt/core/bin && curl -O ${RBLCHECK_URL} && chmod 755 rblcheck.sh )
+(cd /opt/core/bin && curl -O ${RBLCHECK_URL} && chmod 755 rblcheck.sh)
 
 echo "* Cleanup home/admin because of delegate dataset usage"
 rm -rf /home/admin/.[^.]*
