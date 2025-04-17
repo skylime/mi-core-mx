@@ -23,8 +23,6 @@
 		"mbox_lmtp_addr":       {"type": "text", "description": "ip or hostname of lmtp server, ip addresses requires squared brackets"},
 		"mbox_lmtp_key":        {"type": "text", "description": "base64 encoded spipe key for lmtp"},
 		"mx_ssl":               {"type": "text", "description": "ssl cert, key and CA for imaps and pop3s in pem format"},
-		"scan_host":            {"type": "text", "description": "ip or hostname of scan server, ip addresses requires squared brackets a list of addresses is seperated by spaces, up to 32 spamd servers are supported optional, if not given, local scanner will be used"},
-		"scan_key":             {"type": "text", "description": "base64 encoded spipe key for scan hosts (one key only - same for all!) - required only if 'scan_host' is given"},
 		"dkim_selector":        {"type": "text", "description": "DKIM selector (default is dkim)"},
 		"dkim_private_key":     {"type": "text", "description": "Default Domainkey for DKIM"},
 		"srs_secret":           {"type": "text", "description": "secret for generating SRS strings"},

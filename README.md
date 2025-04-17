@@ -19,8 +19,6 @@ This image is part of the following images:
 - `api_redis_addr` [*]: ip or hostname of api server, ip addresses requires squared brackets
 - `api_redis_key` [*]: base64 encoded spipe key for api server
 - `mx_ssl` [*]: ssl cert, key and CA for smtp in pem format
-- `scan_host` : ip or hostname of scan server, ip addresses requires squared brackets<br /> a list of addresses is seperated by spaces, up to 32 spamd servers are supported<br /> optional, if not given, local scanner will be used
-- `scan_key` : base64 encoded spipe key for scan hosts (one key only - same for all!) - required only if 'scan_host' is given
 - `dkim_selector`: DKIM selector (default is dkim)
 - `dkim_private_key` [*]: Default Domainkey for DKIM
 - `srs_secret` [*]: secret for generating SRS strings

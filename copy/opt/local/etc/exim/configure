@@ -181,33 +181,29 @@ begin acl
 			message       = relay not permitted - recipient unknown
 
 	acl_check_data:
-		#>> the clamav job 
-		deny
-			message       = This message contains malware ($malware_name)
-			condition     = ${if < {$message_size}{25M}}
-			malware       = *
-		#>> skip spam scanning for large msg (larger 1M)
-		accept
-			condition       = ${if or { {eq{DISABLEACLCHECK}{1}} {>{$message_size}{1M}}}}
-			log_message     = Spam scan skipped; message too large ($message_size)
-#			add_header      = X-Spam-Report: Spam scan skipped; message too large
-			set acl_m_large = yes
+		#>> Remove foreign headers
+		warn
+			remove_header = x-spam-bar : x-spam-score : x-spam-report : x-spam-status
+		#>> Spam scanning
+		warn
+			spam          = nobody:true/defer_ok
+		#>> use greylisting available in rspamd v1.3+
+		defer message    = Please try again later
+			 condition  = ${if eq{$spam_action}{soft reject}}
 		#>> put headers in all messages (no matter if spam or not)
 		warn
-			spam          = nobody:true/defer_ok
 			add_header    = X-Spam-Score: $spam_score
-			add_header    = X-Spam-Level: $spam_bar
-		#>> put Spam Flag in messages with score > 5
-		warn
-			spam          = nobody:true/defer_ok
-			condition     = ${if >{$spam_score_int}{50}{true}{false}}
-			add_header    = X-Spam-Flag: YES
 			add_header    = X-Spam-Report: $spam_report
-		#>> reject spam at high scores (> 12)
+		#>> put Spam Flag in messages if message is not ham
+		#>> do not match when $spam_action is empty (e.g. when rspamd is not running)
+		warn
+			add_header    = X-Spam-Bar: $spam_bar
+			add_header    = X-Spam-Flag: YES
+			! condition   = ${if match{$spam_action}{^no action\$|^greylist\$|^\$}}
+		#>> reject spam or virus messages
 		deny
-			message       = This message scored $spam_score spam points.
-			spam          = nobody:true/defer_ok
-			condition     = ${if >{$spam_score_int}{120}{true}{false}}
+			message       = Message discarded as high-probability spam or virus
+			condition     = ${if eq{$spam_action}{reject}}
 		#>> default accept
 		accept
 
@@ -224,25 +220,6 @@ begin routers
 		                          {${quote_local_part:$4}@$3}\
 		                          }
 		headers_add             = X-SRS-Return: DSN routed via $primary_hostname. See SRS_URL
-
-	#>> possible to scan mails at routing-time rather than at acl-time
-	spamcheck:
-		driver                  = accept
-		no_verify
-		#>> if not scanned at ACL-Time
-		condition               = ${if eq {$acl_m_noscan}{yes}}
-		#>> and if not received from local spam scan engine
-		condition               = ${if !eq {$received_protocol}{spam-scanned}}
-		transport               = spamcheck
-
-	#>> mails scanned at routing-time can't be bounced at acl-time - so:
-	spambounce:
-		driver                  = accept
-		condition               = ${if eq {$received_protocol}{spam-scanned}}
-		condition               = ${if and {{def:h_X-Spam-Flag:}{eq {$h_X-Spam-Flag:}{YES}}}}
-		condition               = ${if def:h_X-Spam-Score:}
-		condition               = ${if >{${substr{-2}{$h_X-Spam-Score:}}${substr{-1}{1}{$h_X-Spam-Score:}}}{120}}
-		transport               = man_bounce
 
 	#>> dnslookup - for all mails to external recipients according to MX-Rec
 	lookuphost:
@@ -357,27 +334,6 @@ begin transports
 		driver                  = appendfile
 		file                    = /dev/null
 		disable_logging         = true
-
-	#>> checking spam at routing time
-	spamcheck:
-		debug_print             = "T: spamassassin_pipe for $local_part@$domain"
-		driver                  = pipe
-		use_bsmtp               = true
-		transport_filter        = /opt/local/bin/spamc -F /opt/local/etc/spamassassin/spamc.conf
-		command                 = /opt/local/sbin/exim -C /opt/local/etc/exim/configure -oMr spam-scanned -bS
-		home_directory          = "/tmp"
-		current_directory       = "/tmp"
-		message_prefix          =
-		message_suffix          =
-
-	#>> bouncing mail because of Spam
-	man_bounce:
-		driver                = autoreply
-		to                    = $return_path
-		subject               = Your message: $h_subject:
-		text                  = "We are very sorry, but the message you sent was declared as highrated Spam! \
-		                        If you think this is an error, please contact your provider. We apologise for any inconvenience."
-
 
 #>>
 #>> retry

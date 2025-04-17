@@ -1,0 +1,5 @@
+## This file may be overwritten in case external scan-hosts are used
+## will be overwritten by /opt/core/var/mdata-setup/includes/20-scan-spiped.sh
+
+#>> SpamScanner - we use rspamd
+spamd_address = 127.0.0.1 11333 variant=rspamd

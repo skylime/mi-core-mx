@@ -9,7 +9,6 @@ MUNIN_PLUGINS="
 	clamav
 	exim_mailqueue
 	exim_mailstats
-	spamassassin
 	redis_replication_status
 "
 
@@ -27,30 +26,12 @@ chown clamav:clamav /var/log/clamav
 echo "* Create ssl folder"
 mkdir -p /opt/local/etc/exim/ssl
 
-# Create extra user for spamd
-echo "* Create spamd group and user"
-groupadd spamd
-useradd -d /var/spamassassin -c "spamassassin spamd user" -s /usr/bin/false -g spamd spamd
-passwd -N spamd
-
-# Change default permissions for spamd folder
-echo "* Update permissions for spamassassin folders"
-mkdir /var/spamassassin/.spamassassin
-chown -R spamd:spamd /var/spamassassin
-chown -R spamd:spamd /opt/local/etc/spamassassin
-
-# Create logging folder for spamd
-echo "* Create logging folder for spamd"
-mkdir /var/log/spamd
-chown -R spamd:spamd /var/log/spamd
-
-# Update spamd and clamd
-echo "* Update spamd and clamd database"
-/opt/local/bin/freshclam
-pyzor --homedir /opt/local/etc/spamassassin discover
-
 echo "* Copy mailer.conf to /etc/ because of exim usage"
 cp /opt/local/share/examples/exim/mailer.conf /etc/
+
+echo "* Create folders for redis api-repl"
+mkdir -p /var/db/redis/{api-repl,rspamd}
+chown -R redis:redis /var/db/redis
 
 echo "* Activate munin plugins"
 /opt/core/bin/munin-node-plugins ${MUNIN_PLUGINS}
