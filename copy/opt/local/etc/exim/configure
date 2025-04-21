@@ -43,7 +43,7 @@ domainlist local_domains         = PRIMARY_HOSTNAME : localhost
 # special handling for rfc 2142 usernames and for root
 localpartlist rfc2142_localparts = postmaster :  abuse : noc : security : root
 
-redis_servers = /var/db/redis/api-repl/redis.sock
+redis_servers = localhost(/var/db/redis/api-repl/redis.sock)//
 
 #>> submission from a local MUA or script
 #>> messages from these hosts will get fixups
