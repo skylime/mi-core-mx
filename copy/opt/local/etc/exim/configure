@@ -35,6 +35,7 @@ DISABLEACLCHECK  = 0
 primary_hostname = PRIMARY_HOSTNAME
 
 # security reasons
+deliver_drop_privilege
 smtp_accept_max  = 500
 
 domainlist local_domains         = PRIMARY_HOSTNAME : localhost
@@ -42,7 +43,7 @@ domainlist local_domains         = PRIMARY_HOSTNAME : localhost
 # special handling for rfc 2142 usernames and for root
 localpartlist rfc2142_localparts = postmaster :  abuse : noc : security : root
 
-redis_servers = 127.0.0.1//
+redis_servers = /var/db/redis/api-repl/redis.sock
 
 #>> submission from a local MUA or script
 #>> messages from these hosts will get fixups
@@ -197,9 +198,9 @@ begin acl
 		#>> put Spam Flag in messages if message is not ham
 		#>> do not match when $spam_action is empty (e.g. when rspamd is not running)
 		warn
+			! condition   = ${if match{$spam_action}{^no action\$|^greylist\$|^\$}}
 			add_header    = X-Spam-Bar: $spam_bar
 			add_header    = X-Spam-Flag: YES
-			! condition   = ${if match{$spam_action}{^no action\$|^greylist\$|^\$}}
 		#>> reject spam or virus messages
 		deny
 			message       = Message discarded as high-probability spam or virus

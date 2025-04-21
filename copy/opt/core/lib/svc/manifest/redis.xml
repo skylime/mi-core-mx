@@ -23,16 +23,16 @@
       </property_group>
     </instance>
     <instance name='api-repl' enabled='false'>
-      <method_context working_directory='/var/db/redis/api-repl' project='redis'>
-        <method_credential group='redis' user='redis'/>
+      <method_context working_directory='/var/db/redis/api-repl'>
+        <method_credential group='redis' user='mail'/>
       </method_context>
       <property_group name='config' type='application'>
         <propval name='file' type='astring' value='/opt/local/etc/redis/api-repl.conf'/>
       </property_group>
     </instance>
     <instance name='rspamd' enabled='false'>
-      <method_context working_directory='/var/db/redis/rspamd' project='redis'>
-        <method_credential group='redis' user='redis'/>
+      <method_context working_directory='/var/db/redis/rspamd'>
+        <method_credential group='redis' user='rspamd'/>
       </method_context>
       <property_group name='config' type='application'>
         <propval name='file' type='astring' value='/opt/local/etc/redis/rspamd.conf'/>
