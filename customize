@@ -13,7 +13,7 @@ MUNIN_PLUGINS="
 "
 
 # rblcheck.sh version
-RBLCHECK_VERSION=1.4
+RBLCHECK_VERSION=1.5
 RBLCHECK_URL="https://raw.githubusercontent.com/drscream/rblcheck.sh/v${RBLCHECK_VERSION}/rblcheck.sh"
 
 # Exit if any commands fail
